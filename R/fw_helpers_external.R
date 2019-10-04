@@ -37,17 +37,18 @@ fw_get_user_log <- function() {
 # Framework UI Header Creation
 fw_create_header <- function() {
     return(
-        shinydashboard::dashboardHeader(
+        shinydashboardPlus::dashboardHeaderPlus(
             title = shiny::div(class = "periscope-busy-ind",
                                "Working",
                                shiny::img(alt = "Working...",
                                           hspace = "5px",
                                           src = "img/loader.gif") ),
-            titleWidth = shiny::isolate(.g_opts$sidebar_size) )
+            titleWidth = shiny::isolate(.g_opts$sidebar_size),
+            enable_rightsidebar = TRUE, rightSidebarIcon = "gears")
     )
 }
 
-# Framework UI Sidebar Creation
+# Framework UI Left Sidebar Creation
 fw_create_sidebar <- function() {
     basic <- shiny::isolate(.g_opts$side_basic)
     adv   <- shiny::isolate(.g_opts$side_advanced)
@@ -76,6 +77,37 @@ fw_create_sidebar <- function() {
         ) )
 }
 
+# Framework UI Right Sidebar Creation
+fw_create_right_sidebar <- function() {
+    return(
+        shinydashboardPlus::rightSidebar(
+            background = "dark",
+            rightSidebarTabContent(
+                id = 1,
+                icon = "desktop",
+                title = "Tab 1",
+                active = TRUE,
+                sliderInput(
+                    "obs", 
+                    "Number of observations:",
+                    min = 0, max = 1000, value = 500
+                )
+            ),
+            rightSidebarTabContent(
+                id = 2,
+                title = "Tab 2",
+                textInput("caption", "Caption", "Data Summary")
+            ),
+            rightSidebarTabContent(
+                id = 3,
+                title = "Tab 3",
+                icon = "paint-brush",
+                numericInput("obs", "Observations:", 10, min = 1, max = 100)
+            )
+        )
+    )
+}
+
 # Framework UI Body Creation
 fw_create_body <- function() {
     app_info <- shiny::isolate(.g_opts$app_info)
@@ -94,7 +126,7 @@ fw_create_body <- function() {
         shinydashboard::dashboardBody(
             shiny::tags$head(
                 shiny::tags$style(.framework_css()),
-                shiny::tags$script(.framework_js()) ),
+                shiny::tags$script(.framework_js())),
             info_content,
             shiny::isolate(.g_opts$body_elements),
             if (shiny::isolate(.g_opts$show_userlog)) {
