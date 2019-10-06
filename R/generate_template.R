@@ -161,7 +161,8 @@ create_new_application <- function(name, location, sampleapp = FALSE) {
                "server_global.R",
                "server_local.R",
                "ui_body.R",
-               "ui_sidebar.R")
+               "ui_sidebar.R",
+               "ui_sidebar_right.R")
 
     targetdir <- paste(newloc, "program", sep = usersep)
     sourcedir <- paste("fw_templ",

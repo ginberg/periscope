@@ -13,6 +13,8 @@ periscope:::fw_reset_app_options()
 
 source(paste("program", "ui_sidebar.R", sep = .Platform$file.sep),
        local = TRUE)
+source(paste("program", "ui_sidebar_right.R", sep = .Platform$file.sep),
+       local = TRUE)
 source(paste("program", "ui_body.R", sep = .Platform$file.sep),
        local = TRUE)
 

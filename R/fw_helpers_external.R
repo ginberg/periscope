@@ -81,9 +81,13 @@ fw_create_sidebar <- function() {
 fw_create_right_sidebar <- function() {
     side_right <- shiny::isolate(.g_opts$side_right)
     
-    return(do.call(shinydashboardPlus::rightSidebar, 
-                   c(background = "dark", 
-                     side_right)))
+    if (!is.null(side_right) && length(side_right) > 0) {
+        return(do.call(shinydashboardPlus::rightSidebar, 
+                       c(background = "dark", 
+                         side_right)))    
+    } else {
+        return(shinydashboardPlus::rightSidebar(background = "dark"))
+    }
 }
 
 # Framework UI Body Creation
