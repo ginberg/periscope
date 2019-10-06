@@ -89,6 +89,46 @@ add_ui_sidebar_advanced <- function(elementlist = NULL,
     invisible(NULL)
 }
 
+#' Add UI Elements to the Sidebar (Advanced Tab)
+#'
+#' This function registers UI elements to the secondary (rear-most) tab
+#' on the dashboard sidebar.  The default name of the tab is \strong{Advanced}
+#' but can be renamed using the tabname argument.
+#'
+#' @param elementlist list of UI elements to add to the sidebar tab
+#' @param append whether to append the \code{elementlist} to the currently
+#' registered elements or replace the currently registered elements completely
+#'
+#' @section Shiny Usage:
+#' Call this function after creating elements in \code{program/ui_sidebar.R} to register
+#' them to the application framework and show them on the Advanced tab in the
+#' dashboard sidebar
+#'
+#' @seealso \link[periscope]{add_ui_sidebar_basic}
+#' @seealso \link[periscope]{add_ui_body}
+#'
+#' @examples 
+#' require(shiny)
+#' 
+#' s1 <- selectInput("sample1", "A Select", c("A", "B", "C"))
+#' s2 <- radioButtons("sample2", NULL, c("A", "B", "C"))
+#' 
+#' add_ui_sidebar_right(list(s1, s2), append = FALSE)
+#' 
+#' @export
+add_ui_sidebar_right <- function(elementlist = NULL,
+                                 append = FALSE) {
+    if (append) {
+        .g_opts$side_right <- append(
+            shiny::isolate(.g_opts$side_right),
+            elementlist,
+            length(shiny::isolate(.g_opts$side_right)) - 1)
+    } else {
+        .g_opts$side_right <- elementlist
+    }
+    invisible(NULL)
+}
+
 
 #' Add UI Elements to the Body area
 #'
