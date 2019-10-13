@@ -206,10 +206,7 @@ downloadFile <- function(input, output, session, logger,
                 openxlsx::saveWorkbook(data, file)
             }
             else {
-                show_rownames <- attr(data, "show_rownames")
-                openxlsx::write.xlsx(data, file, 
-                                     asTable   = TRUE, 
-                                     row.names = !is.null(show_rownames) && show_rownames)
+                openxlsx::write.xlsx(data, file, asTable = TRUE)
             }
         }
         # text file processing
