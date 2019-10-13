@@ -78,8 +78,7 @@ body5 <- shinydashboard::box( id = "bodyElement5",
                                                       list("png", "tiff",
                                                            "txt", "tsv"),
                                                       btn_overlap = FALSE,
-                                                      "Download plot or data"))
-              ),
+                                                      "Download plot or data")) ),
               uiOutput("hover_info") )
 
 body6 <- shinydashboard::box( id     = "bodyElement6",
