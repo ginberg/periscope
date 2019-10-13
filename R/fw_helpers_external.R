@@ -37,6 +37,19 @@ fw_get_user_log <- function() {
 # Framework UI Header Creation
 fw_create_header <- function() {
     return(
+        shinydashboard::dashboardHeader(
+            title = shiny::div(class = "periscope-busy-ind",
+                               "Working",
+                               shiny::img(alt = "Working...",
+                                          hspace = "5px",
+                                          src = "img/loader.gif") ),
+            titleWidth = shiny::isolate(.g_opts$sidebar_size))
+    )
+}
+
+# Framework UI Header Creation that includes a right sidebar
+fw_create_header_plus <- function() {
+    return(
         shinydashboardPlus::dashboardHeaderPlus(
             title = shiny::div(class = "periscope-busy-ind",
                                "Working",

@@ -12,6 +12,7 @@
 #' @param name name for the new application and directory
 #' @param location base path for creation of \code{name}
 #' @param sampleapp whether to create a sample shiny application
+#' @param dashboard_plus whether to include functionality from shinydashboardPlus, such as a right-sidebar
 #'
 #' @section Name:
 #' The \code{name} directory must not exist in \code{location}.  If the code
@@ -46,6 +47,10 @@
 #' Create sidebar UI elements in this file and register them with the
 #' framework using a call to \link[periscope]{add_ui_sidebar_basic} or
 #' \link[periscope]{add_ui_sidebar_advanced} \cr
+#' \cr
+#' \strong{\emph{name/program}/ui_sidebar_right.R} :\cr
+#' Create right sidebar UI elements in this file and register them with the
+#' framework using a call to \link[periscope]{add_ui_sidebar_right} \cr
 #' \cr
 #' \strong{\emph{name/program/data}} directory :\cr
 #' Use this location for data files.  There is a \strong{.gitignore} file
@@ -85,7 +90,7 @@
 #' create_new_application(name = 'mytestapp', location = tempdir())
 #'
 #' @export
-create_new_application <- function(name, location, sampleapp = FALSE) {
+create_new_application <- function(name, location, sampleapp = FALSE, dashboard_plus = FALSE) {
     usersep <- .Platform$file.sep
     newloc <- paste(location, name, sep = usersep)
 
@@ -99,8 +104,8 @@ create_new_application <- function(name, location, sampleapp = FALSE) {
     }
     else {
         .create_dirs(newloc, usersep)
-        .copy_fw_files(newloc, usersep)
-        .copy_program_files(newloc, usersep, sampleapp)
+        .copy_fw_files(newloc, usersep, dashboard_plus)
+        .copy_program_files(newloc, usersep, sampleapp, dashboard_plus)
 
         message("Framework creation was successful.")
     }
@@ -131,15 +136,22 @@ create_new_application <- function(name, location, sampleapp = FALSE) {
 }
 
 # Create Framework Files ----------------------------
-.copy_fw_files <- function(newloc, usersep) {
+.copy_fw_files <- function(newloc, usersep, dashboard_plus = FALSE) {
     files <- c("global.R",
-               "server.R",
-               "ui.R")
+               "server.R")
+    if (dashboard_plus) {
+        files <- c(files, "ui_plus.R")
+    } else {
+        files <- c(files, "ui.R")
+    }
 
     for (file in files) {
         writeLines(readLines(
             con = system.file("fw_templ", file, package = "periscope")),
             con = paste(newloc, file, sep = usersep))
+    }
+    if (dashboard_plus) {
+        file.rename(paste(newloc, "ui_plus.R", sep = usersep), paste(newloc, "ui.R", sep = usersep))
     }
 
     #subdir copies
@@ -156,13 +168,15 @@ create_new_application <- function(name, location, sampleapp = FALSE) {
 }
 
 # Create Program Files ----------------------------
-.copy_program_files <- function(newloc, usersep, sampleapp) {
+.copy_program_files <- function(newloc, usersep, sampleapp, dashboard_plus) {
     files <- c("global.R",
                "server_global.R",
                "server_local.R",
                "ui_body.R",
-               "ui_sidebar.R",
-               "ui_sidebar_right.R")
+               "ui_sidebar.R")
+    if (dashboard_plus) {
+        files <- c(files, "ui_sidebar_right.R")
+    }
 
     targetdir <- paste(newloc, "program", sep = usersep)
     sourcedir <- paste("fw_templ",

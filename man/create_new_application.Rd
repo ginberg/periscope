@@ -4,7 +4,8 @@
 \alias{create_new_application}
 \title{Create a new templated framework application}
 \usage{
-create_new_application(name, location, sampleapp = FALSE)
+create_new_application(name, location, sampleapp = FALSE,
+  dashboard_plus = FALSE)
 }
 \arguments{
 \item{name}{name for the new application and directory}
@@ -12,6 +13,8 @@ create_new_application(name, location, sampleapp = FALSE)
 \item{location}{base path for creation of \code{name}}
 
 \item{sampleapp}{whether to create a sample shiny application}
+
+\item{dashboard_plus}{whether to include functionality from shinydashboardPlus, such as a right-sidebar}
 }
 \description{
 Creates ready-to-use templated application files using the periscope
@@ -59,6 +62,10 @@ framework using a call to \link[periscope]{add_ui_body} \cr
 Create sidebar UI elements in this file and register them with the
 framework using a call to \link[periscope]{add_ui_sidebar_basic} or
 \link[periscope]{add_ui_sidebar_advanced} \cr
+\cr
+\strong{\emph{name/program}/ui_sidebar_right.R} :\cr
+Create right sidebar UI elements in this file and register them with the
+framework using a call to \link[periscope]{add_ui_sidebar_right} \cr
 \cr
 \strong{\emph{name/program/data}} directory :\cr
 Use this location for data files.  There is a \strong{.gitignore} file

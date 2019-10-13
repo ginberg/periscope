@@ -21,7 +21,7 @@
 # ----------------------------------------
 
 # -- Create Elements
-body1 <- box( id     = "bodyElement1",
+body1 <- shinydashboard::box( id     = "bodyElement1",
               title  = "Code Specifics and Examples",
               width  = 8,
               status = "primary",
@@ -32,7 +32,7 @@ body1 <- box( id     = "bodyElement1",
               htmlOutput("alerts"),
               htmlOutput("download"))
 
-body2 <- box( id     = "bodyElement2",
+body2 <- shinydashboard::box( id     = "bodyElement2",
               title  = "Framework Information",
               width  = 4,
               status = "success",
@@ -40,7 +40,7 @@ body2 <- box( id     = "bodyElement2",
               collapsed   = TRUE,
               htmlOutput("proginfo") )
 
-body3 <- box( id     = "bodyElement3",
+body3 <- shinydashboard::box( id     = "bodyElement3",
               title  = "Downloadable Table",
               width  = 12,
               status = "primary",
@@ -50,7 +50,7 @@ body3 <- box( id     = "bodyElement3",
                                   list("csv", "tsv"),
                                   "Download table data") )
 
-body4 <- box( id = "bodyElement4",
+body4 <- shinydashboard::box( id = "bodyElement4",
               title = "CanvasXpress Plot",
               width = 4,
               status = "info",
@@ -60,7 +60,7 @@ body4 <- box( id = "bodyElement4",
 
 plot2_hover <- hoverOpts(id = "examplePlot2_hover")
 
-body5 <- box( id = "bodyElement5",
+body5 <- shinydashboard::box( id = "bodyElement5",
               title = "downloadablePlots - ggplot2 & lattice",
               width = 8,
               status = "info",
@@ -87,12 +87,12 @@ body5 <- box( id = "bodyElement5",
                                                   "Download plot or data"))) ),
               uiOutput("hover_info") )
 
-body6 <- box( id     = "bodyElement6",
-              title  = "Logging Information",
-              width  = 12,
-              status = "danger",
-              collapsible = FALSE,
-              htmlOutput("loginfo") )
+body6 <- shinydashboard::box( id     = "bodyElement6",
+                              title  = "Logging Information",
+                              width  = 12,
+                              status = "danger",
+                              collapsible = FALSE,
+                              htmlOutput("loginfo") )
 
 # -- Register Elements in the ORDER SHOWN in the UI
 # --    Note: Will be added before the standard framework footer

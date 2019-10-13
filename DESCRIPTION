@@ -23,6 +23,7 @@ Depends:
     R (>= 3.3)
 Imports:
     shiny (>= 1.0),
+    shinydashboard (>= 0.5),
     shinydashboardPlus (>= 0.5),
     shinyBS (>= 0.61),
     logging (>= 0.7-103),
