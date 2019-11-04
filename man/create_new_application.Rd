@@ -5,7 +5,7 @@
 \title{Create a new templated framework application}
 \usage{
 create_new_application(name, location, sampleapp = FALSE,
-  dashboard_plus = FALSE)
+  right_sidebar = FALSE)
 }
 \arguments{
 \item{name}{name for the new application and directory}
@@ -14,7 +14,7 @@ create_new_application(name, location, sampleapp = FALSE,
 
 \item{sampleapp}{whether to create a sample shiny application}
 
-\item{dashboard_plus}{whether to include functionality from shinydashboardPlus, such as a right-sidebar}
+\item{right_sidebar}{parameter to set the right_sidebar. It can be TRUE/FALSE or a custom icon. See ?shiny::icon() for how to create an icon.}
 }
 \description{
 Creates ready-to-use templated application files using the periscope

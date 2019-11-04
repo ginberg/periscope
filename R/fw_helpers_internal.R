@@ -25,13 +25,20 @@
     side_basic          = .g_sidebar_default_value,
     side_basic_label    = "Basic",
     side_advanced       = .g_sidebar_default_value,
-    side_advanced_label = "Advanced"
+    side_advanced_label = "Advanced",
+    sidebar_right_icon  = "gears"
 )
 
 # reset app options
 .reset_app_options <- function() {
     .g_opts$side_basic    <- .g_sidebar_default_value
     .g_opts$side_advanced <- .g_sidebar_default_value
+}
+
+.set_right_sidebar_icon <- function(right_sidebar_icon) {
+    if (!is.null(right_sidebar_icon)) {
+        .g_opts$sidebar_right_icon <- right_sidebar_icon
+    }
 }
 
 # UI ----------------------------
@@ -53,6 +60,12 @@
                                 app_title, "</a>"))),
             "</div>\").insertAfter($(\"a.sidebar-toggle\"));")))
     return(items)
+}
+
+.right_sidebar_injection <- function() {
+    shiny::tags$script(shiny::HTML("setTimeout(function() {
+                                        $('[class~=\"control-sidebar-tabs\"]').find('li:first').remove();
+                                   }, 5000);"))
 }
 
 # Returns the custom css as HTML

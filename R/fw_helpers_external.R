@@ -57,7 +57,7 @@ fw_create_header_plus <- function() {
                                           hspace = "5px",
                                           src = "img/loader.gif") ),
             titleWidth = shiny::isolate(.g_opts$sidebar_size),
-            enable_rightsidebar = TRUE, rightSidebarIcon = "gears")
+            enable_rightsidebar = TRUE, rightSidebarIcon = shiny::isolate(.g_opts$sidebar_right_icon))
     )
 }
 
@@ -70,6 +70,7 @@ fw_create_sidebar <- function() {
         shinydashboard::dashboardSidebar(
             width = shiny::isolate(.g_opts$sidebar_size),
             .header_injection(),             #injected header elements
+            .right_sidebar_injection(),
             if (!is.null(adv[[1]])) {
                 shiny::div(class = "tab-content",
                     shiny::tabsetPanel(
@@ -94,13 +95,13 @@ fw_create_sidebar <- function() {
 fw_create_right_sidebar <- function() {
     side_right <- shiny::isolate(.g_opts$side_right)
     
+    params <- list(background = "dark", shinyBS::bsAlert("sidebarRightAlert"))
     if (!is.null(side_right) && length(side_right) > 0) {
-        return(do.call(shinydashboardPlus::rightSidebar, 
-                       c(background = "dark", 
-                         side_right)))    
-    } else {
-        return(shinydashboardPlus::rightSidebar(background = "dark"))
+        for (element in side_right) {
+            params <- append(params, list(element))
+        }
     }
+    return(do.call(shinydashboardPlus::rightSidebar, params))
 }
 
 # Framework UI Body Creation

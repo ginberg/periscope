@@ -29,6 +29,8 @@ expect_cleanup_create_new_application <- function(fullname, sampleapp = FALSE, d
     }
     if (dashboard_plus) {
         expect_true(file.exists(paste0(fullname, "/program/ui_sidebar_right.R")))
+    } else {
+        expect_true(!file.exists(paste0(fullname, "/program/ui_sidebar_right.R")))
     }
 
     # clean up
@@ -40,7 +42,7 @@ test_that("create_new_application", {
     appTemp      <- tempfile(pattern = "TestThatApp", tmpdir = appTemp.dir)
     appTemp.name <- gsub('\\\\|/', '', (gsub(appTemp.dir, "", appTemp, fixed = T)))
 
-    expect_message(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = FALSE), 
+    expect_message(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = FALSE, right_sidebar = NULL), 
                    "Framework creation was successful.")
     expect_cleanup_create_new_application(appTemp)
 })
@@ -50,19 +52,20 @@ test_that("create_new_application sample", {
     appTemp      <- tempfile(pattern = "TestThatApp", tmpdir = appTemp.dir)
     appTemp.name <- gsub('\\\\|/', '', (gsub(appTemp.dir, "", appTemp, fixed = T)))
     
-    expect_message(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = TRUE), 
+    expect_message(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = TRUE, right_sidebar = NULL), 
                    "Framework creation was successful.")
     expect_cleanup_create_new_application(appTemp, sampleapp = TRUE)
 })
 
 test_that("create_new_application sample right_sidebar", {
-    appTemp.dir  <- tempdir()
-    appTemp      <- tempfile(pattern = "TestThatApp", tmpdir = appTemp.dir)
-    appTemp.name <- gsub('\\\\|/', '', (gsub(appTemp.dir, "", appTemp, fixed = T)))
+    appTemp.dir   <- tempdir()
+    appTemp       <- tempfile(pattern = "TestThatApp", tmpdir = appTemp.dir)
+    appTemp.name  <- gsub('\\\\|/', '', (gsub(appTemp.dir, "", appTemp, fixed = T)))
+    right_sidebar <- icon("gears")
     
-    expect_message(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = TRUE, dashboard_plus = TRUE), 
+    expect_message(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = TRUE, right_sidebar = right_sidebar), 
                    "Framework creation was successful.")
-    expect_cleanup_create_new_application(appTemp, sampleapp = TRUE, dashboard_plus = TRUE)
+    expect_cleanup_create_new_application(appTemp, sampleapp = TRUE, !is.null(right_sidebar))
 })
 
 test_that("create_new_application invalid location", {

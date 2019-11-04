@@ -89,11 +89,10 @@ add_ui_sidebar_advanced <- function(elementlist = NULL,
     invisible(NULL)
 }
 
-#' Add UI Elements to the Sidebar (Advanced Tab)
+#' Add UI Elements to the Right Sidebar
 #'
-#' This function registers UI elements to the secondary (rear-most) tab
-#' on the dashboard sidebar.  The default name of the tab is \strong{Advanced}
-#' but can be renamed using the tabname argument.
+#' This function registers UI elements at the right dashboard sidebar. 
+#' The UI element should be of type rightSidebarTabContent.
 #'
 #' @param elementlist list of UI elements to add to the sidebar tab
 #' @param append whether to append the \code{elementlist} to the currently
@@ -101,7 +100,7 @@ add_ui_sidebar_advanced <- function(elementlist = NULL,
 #'
 #' @section Shiny Usage:
 #' Call this function after creating elements in \code{program/ui_sidebar.R} to register
-#' them to the application framework and show them on the Advanced tab in the
+#' them to the application framework and show them on the right
 #' dashboard sidebar
 #'
 #' @seealso \link[periscope]{add_ui_sidebar_basic}
@@ -109,11 +108,13 @@ add_ui_sidebar_advanced <- function(elementlist = NULL,
 #'
 #' @examples 
 #' require(shiny)
+#' require(shinydashboardPlus)
 #' 
-#' s1 <- selectInput("sample1", "A Select", c("A", "B", "C"))
-#' s2 <- radioButtons("sample2", NULL, c("A", "B", "C"))
-#' 
-#' add_ui_sidebar_right(list(s1, s2), append = FALSE)
+#' s1 <- rightSidebarTabContent(id = 1, icon = "desktop", title = "Tab 1 - Plots", active = TRUE, 
+#'                              div(helpText(align = "center", "Sample UI Text"),
+#'                                  selectInput("sample1", "A Select", c("A", "B", "C")) ))
+#'  
+#' add_ui_sidebar_right(list(s1), append = FALSE)
 #' 
 #' @export
 add_ui_sidebar_right <- function(elementlist = NULL,
@@ -121,8 +122,7 @@ add_ui_sidebar_right <- function(elementlist = NULL,
     if (append) {
         .g_opts$side_right <- append(
             shiny::isolate(.g_opts$side_right),
-            elementlist,
-            length(shiny::isolate(.g_opts$side_right)) - 1)
+            elementlist)
     } else {
         .g_opts$side_right <- elementlist
     }
