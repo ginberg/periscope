@@ -117,8 +117,7 @@ add_ui_sidebar_advanced <- function(elementlist = NULL,
 #' add_ui_sidebar_right(list(s1), append = FALSE)
 #' 
 #' @export
-add_ui_sidebar_right <- function(elementlist = NULL,
-                                 append = FALSE) {
+add_ui_sidebar_right <- function(elementlist = NULL, append = FALSE) {
     if (append) {
         .g_opts$side_right <- append(
             shiny::isolate(.g_opts$side_right),
