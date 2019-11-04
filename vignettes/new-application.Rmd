@@ -293,14 +293,12 @@ a call to *add_ui_sidebar_right()*.
 
 ```{r, eval=F}
 # -- Create UI sidebar Elements
-s1 <- div( helpText(align = "center", "Sample UI Text"),
-                  selectInput("sample1", "A Select", c("A", "B", "C")) )
-
-s2 <- div( ui_tooltip("sample2_tt", "Pick An Option", "Popup Text"),
-                  radioButtons("sample2", NULL, c("A", "B", "C")) )
+s1 <- rightSidebarTabContent(id = 1, icon = "desktop", title = "Tab 1 - Plots", active = TRUE, 
+                              div(helpText(align = "center", "Sample UI Text"),
+                                  selectInput("sample1", "A Select", c("A", "B", "C")) ))
                   
 # -- Register Basic Elements in the ORDER SHOWN in the UI
-add_ui_sidebar_right(list(s1, s2), append = FALSE)
+add_ui_sidebar_right(list(s1), append = FALSE)
 ```
 
 ### program/ui_body.R

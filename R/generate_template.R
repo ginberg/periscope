@@ -179,7 +179,7 @@ create_new_application <- function(name, location, sampleapp = FALSE, right_side
 }
 
 # Create Program Files ----------------------------
-.copy_program_files <- function(newloc, usersep, sampleapp, dashboard_plus) {
+.copy_program_files <- function(newloc, usersep, sampleapp, dashboard_plus = FALSE) {
     files <- c("global.R",
                "server_global.R",
                "server_local.R",
