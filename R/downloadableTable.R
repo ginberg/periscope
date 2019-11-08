@@ -156,9 +156,10 @@ downloadableTable <- function(input, output, session, logger,
                               message = list(btn  = session$ns("dtableButtonDiv"),
                                              rows = -1))
 
-    dtInfo <- shiny::reactiveValues(selection = NULL,
-                                    selected  = NULL,
-                                    tabledata = NULL,
+    dtInfo <- shiny::reactiveValues(prev_selection   = NULL,
+                                    selection        = NULL,
+                                    selected         = NULL,
+                                    tabledata        = NULL,
                                     downloaddatafxns = NULL)
 
     shiny::observe({
@@ -166,11 +167,16 @@ downloadableTable <- function(input, output, session, logger,
         if (!is.null(selection)) {
             result[["selected"]] <- selection()
         }
+        if (!is.null(shiny::isolate(dtInfo$prev_selection)) && !is.null(shiny::isolate(dtInfo$prev_selection)[["selected"]]) &&
+            !is.null(result) && !is.null(result[["selected"]]) && identical(shiny::isolate(dtInfo$prev_selection)[["selected"]], result[["selected"]])) {
+            result[["selected"]] <- rev(result[["selected"]])
+        }   
         dtInfo$selection <- result
+        dtInfo$prev_selection <- dtInfo$selection
     })
     
     shiny::observe({
-        dtInfo$selected <- input$dtableOutputID_rows_selected
+        dtInfo$selected  <- input$dtableOutputID_rows_selected
     })
 
     shiny::observe({
