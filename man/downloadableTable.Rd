@@ -57,7 +57,7 @@ This function is not called directly by consumers - it is accessed in
 server.R using the same id provided in \code{downloadableTableUI}:
 
 \strong{\code{callModule(downloadableTable, id, logger, filenameroot,
-downloaddatafxns, tabledata, rownames, caption)}}
+downloaddatafxns, tabledata, selection, rownames, caption)}}
 
 \emph{Note}: callModule returns the reactive expression containing the
 currently selected rows in the display table.
