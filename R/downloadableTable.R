@@ -103,6 +103,8 @@ downloadableTableUI <- function(id,
 #' when the table UI was created.
 #' @param tabledata function or reactive expression providing the table display
 #' data as a return value. This function should require no input parameters.
+#' @param selection function or reactive expression providing the row_ids of the
+#' rows that should be selected.
 #' @param rownames whether or not to show the rownames in the table
 #' @param caption table caption
 #'
@@ -136,6 +138,7 @@ downloadableTableUI <- function(id,
 #' #                            filenameroot = "mydownload1",
 #' #                            downloaddatafxns = list(csv = mydatafxn1, tsv = mydatafxn2),
 #' #                            tabledata = mydatafxn3,
+#' #                            selection = mydataRowIds,
 #' #                            rownames = FALSE,
 #' #                            caption = "This is a great table!  By: Me" )
 #' 
@@ -144,7 +147,7 @@ downloadableTableUI <- function(id,
 #' @export
 downloadableTable <- function(input, output, session, logger,
                               filenameroot, downloaddatafxns = list(),
-                              tabledata, rownames = TRUE, caption = NULL) {
+                              tabledata, selection = NULL, rownames = TRUE, caption = NULL) {
 
     shiny::callModule(downloadFile,  "dtableButtonID",
                       logger, filenameroot, downloaddatafxns)
@@ -153,10 +156,19 @@ downloadableTable <- function(input, output, session, logger,
                               message = list(btn  = session$ns("dtableButtonDiv"),
                                              rows = -1))
 
-    dtInfo <- shiny::reactiveValues(selected  = NULL,
+    dtInfo <- shiny::reactiveValues(selection = NULL,
+                                    selected  = NULL,
                                     tabledata = NULL,
                                     downloaddatafxns = NULL)
 
+    shiny::observe({
+        result <- list(ifelse(input$dtableSingleSelect == "TRUE", "single", "multi"))
+        if (!is.null(selection)) {
+            result[["selected"]] <- selection()
+        }
+        dtInfo$selection <- result
+    })
+    
     shiny::observe({
         dtInfo$selected <- input$dtableOutputID_rows_selected
     })
@@ -189,28 +201,27 @@ downloadableTable <- function(input, output, session, logger,
                 colnames(sourcedata) <- c(" ", col.names)
             }
         }
-        sourcedata
-    },
-        options = list(
-            deferRender     = FALSE,
-            scrollY         = input$dtableOutputHeight,
-            paging          = FALSE,
-            scrollX         = TRUE,
-            dom             = '<"periscope-downloadable-table-header"f>tr',
-            processing      = TRUE,
-            rowId           = 1,
-            columnDefs      = list(list(targets = 0,
-                                        visible = FALSE,
-                                        searchable = FALSE)),
-            searchHighlight = TRUE ),
-        class = paste("periscope-downloadable-table table-condensed",
-                      "table-striped table-responsive"),
-        rownames = rownames,
-        selection = ifelse(input$dtableSingleSelect == "TRUE", "single", "multi"),
-        caption = caption,
-        escape = FALSE,
-        style = "bootstrap"
-    )
+        DT::datatable(data = sourcedata,
+                      options = list(
+                          deferRender     = FALSE,
+                          scrollY         = input$dtableOutputHeight,
+                          paging          = FALSE,
+                          scrollX         = TRUE,
+                          dom             = '<"periscope-downloadable-table-header"f>tr',
+                          processing      = TRUE,
+                          rowId           = 1,
+                          columnDefs      = list(list(targets = 0,
+                                                      visible = FALSE,
+                                                      searchable = FALSE)),
+                          searchHighlight = TRUE ),
+                      class = paste("periscope-downloadable-table table-condensed",
+                                    "table-striped table-responsive"),
+                      rownames = rownames,
+                      selection = dtInfo$selection,
+                      caption = caption,
+                      escape = FALSE,
+                      style = "bootstrap")
+    })
 
 
     selectedrows <- shiny::reactive({

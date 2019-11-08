@@ -5,8 +5,8 @@
 \title{downloadableTable Module}
 \usage{
 downloadableTable(input, output, session, logger, filenameroot,
-  downloaddatafxns = list(), tabledata, rownames = TRUE,
-  caption = NULL)
+  downloaddatafxns = list(), tabledata, selection = NULL,
+  rownames = TRUE, caption = NULL)
 }
 \arguments{
 \item{input}{provided by \code{shiny::callModule}}
@@ -28,6 +28,9 @@ when the table UI was created.}
 
 \item{tabledata}{function or reactive expression providing the table display
 data as a return value. This function should require no input parameters.}
+
+\item{selection}{function or reactive expression providing the row_ids of the
+rows that should be selected.}
 
 \item{rownames}{whether or not to show the rownames in the table}
 
@@ -69,6 +72,7 @@ currently selected rows in the display table.
 #                            filenameroot = "mydownload1",
 #                            downloaddatafxns = list(csv = mydatafxn1, tsv = mydatafxn2),
 #                            tabledata = mydatafxn3,
+#                            selection = mydataRowIds,
 #                            rownames = FALSE,
 #                            caption = "This is a great table!  By: Me" )
 
