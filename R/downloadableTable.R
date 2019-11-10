@@ -103,10 +103,10 @@ downloadableTableUI <- function(id,
 #' when the table UI was created.
 #' @param tabledata function or reactive expression providing the table display
 #' data as a return value. This function should require no input parameters.
-#' @param selection function or reactive expression providing the row_ids of the
-#' rows that should be selected.
 #' @param rownames whether or not to show the rownames in the table
 #' @param caption table caption
+#' @param selection function or reactive expression providing the row_ids of the
+#' rows that should be selected.
 #'
 #' @return Reactive expression containing the currently selected rows in the
 #' display table
@@ -120,7 +120,7 @@ downloadableTableUI <- function(id,
 #' server.R using the same id provided in \code{downloadableTableUI}:
 #'
 #' \strong{\code{callModule(downloadableTable, id, logger, filenameroot,
-#' downloaddatafxns, tabledata, selection, rownames, caption)}}
+#' downloaddatafxns, tabledata, rownames, caption, selection)}}
 #'
 #' \emph{Note}: callModule returns the reactive expression containing the
 #' currently selected rows in the display table.
@@ -138,16 +138,17 @@ downloadableTableUI <- function(id,
 #' #                            filenameroot = "mydownload1",
 #' #                            downloaddatafxns = list(csv = mydatafxn1, tsv = mydatafxn2),
 #' #                            tabledata = mydatafxn3,
-#' #                            selection = mydataRowIds,
 #' #                            rownames = FALSE,
-#' #                            caption = "This is a great table!  By: Me" )
+#' #                            caption = "This is a great table!  By: Me",
+#' #                            selection = mydataRowIds)
 #' 
 #' # selectedrows is the reactive return value, captured for later use
 #' 
 #' @export
 downloadableTable <- function(input, output, session, logger,
                               filenameroot, downloaddatafxns = list(),
-                              tabledata, selection = NULL, rownames = TRUE, caption = NULL) {
+                              tabledata, rownames = TRUE, caption = NULL, 
+                              selection = NULL) {
 
     shiny::callModule(downloadFile,  "dtableButtonID",
                       logger, filenameroot, downloaddatafxns)

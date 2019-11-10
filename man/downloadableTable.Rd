@@ -5,8 +5,8 @@
 \title{downloadableTable Module}
 \usage{
 downloadableTable(input, output, session, logger, filenameroot,
-  downloaddatafxns = list(), tabledata, selection = NULL,
-  rownames = TRUE, caption = NULL)
+  downloaddatafxns = list(), tabledata, rownames = TRUE,
+  caption = NULL, selection = NULL)
 }
 \arguments{
 \item{input}{provided by \code{shiny::callModule}}
@@ -29,12 +29,12 @@ when the table UI was created.}
 \item{tabledata}{function or reactive expression providing the table display
 data as a return value. This function should require no input parameters.}
 
-\item{selection}{function or reactive expression providing the row_ids of the
-rows that should be selected.}
-
 \item{rownames}{whether or not to show the rownames in the table}
 
 \item{caption}{table caption}
+
+\item{selection}{function or reactive expression providing the row_ids of the
+rows that should be selected.}
 }
 \value{
 Reactive expression containing the currently selected rows in the
@@ -57,7 +57,7 @@ This function is not called directly by consumers - it is accessed in
 server.R using the same id provided in \code{downloadableTableUI}:
 
 \strong{\code{callModule(downloadableTable, id, logger, filenameroot,
-downloaddatafxns, tabledata, selection, rownames, caption)}}
+downloaddatafxns, tabledata, rownames, caption, selection)}}
 
 \emph{Note}: callModule returns the reactive expression containing the
 currently selected rows in the display table.
@@ -72,9 +72,9 @@ currently selected rows in the display table.
 #                            filenameroot = "mydownload1",
 #                            downloaddatafxns = list(csv = mydatafxn1, tsv = mydatafxn2),
 #                            tabledata = mydatafxn3,
-#                            selection = mydataRowIds,
 #                            rownames = FALSE,
-#                            caption = "This is a great table!  By: Me" )
+#                            caption = "This is a great table!  By: Me",
+#                            selection = mydataRowIds)
 
 # selectedrows is the reactive return value, captured for later use
 
