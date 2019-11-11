@@ -5,7 +5,7 @@
 \title{Create a new templated framework application}
 \usage{
 create_new_application(name, location, sampleapp = FALSE, reset = TRUE,
-  right_sidebar = FALSE)
+  rightsidebar = FALSE)
 }
 \arguments{
 \item{name}{name for the new application and directory}
@@ -16,7 +16,7 @@ create_new_application(name, location, sampleapp = FALSE, reset = TRUE,
 
 \item{reset}{whether the reset button should be added on the Advanced (left) sidebar.}
 
-\item{right_sidebar}{parameter to set the right_sidebar. It can be TRUE/FALSE or a character containing the name of a shiny::icon().}
+\item{rightsidebar}{parameter to set the right sidebar. It can be TRUE/FALSE or a character containing the name of a shiny::icon().}
 }
 \description{
 Creates ready-to-use templated application files using the periscope
@@ -106,7 +106,7 @@ name\\www\\img\\tooltip.png
  value
  FALSE   --- no sidebar
  TRUE    --- sidebar with default icon
- "table" --- sidebar with table icon. The character should be a valid "font-awesome" icon.
+ "table" --- sidebar with table icon. The character string should be a valid "font-awesome" icon.
  }
 }
 
@@ -115,7 +115,7 @@ name\\www\\img\\tooltip.png
 create_new_application(name = 'mytestapp', location = tempdir(), sampleapp = TRUE)
 # sample app named 'mytestapp' with a right sidebar using a custom icon created in a temp dir
 create_new_application(name = 'mytestapp', location = tempdir(), sampleapp = TRUE, 
-right_sidebar = "table")
+rightsidebar = "table")
 
 # blank app named 'myblankapp' created in a temp dir
 create_new_application(name = 'mytestapp', location = tempdir())

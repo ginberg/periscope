@@ -13,7 +13,7 @@
 #' @param location base path for creation of \code{name}
 #' @param sampleapp whether to create a sample shiny application
 #' @param reset whether the reset button should be added on the Advanced (left) sidebar.
-#' @param right_sidebar parameter to set the right_sidebar. It can be TRUE/FALSE or a character containing the name of a shiny::icon().
+#' @param rightsidebar parameter to set the right sidebar. It can be TRUE/FALSE or a character containing the name of a shiny::icon().
 #'
 #' @section Name:
 #' The \code{name} directory must not exist in \code{location}.  If the code
@@ -88,7 +88,7 @@
 #'  value
 #'  FALSE   --- no sidebar
 #'  TRUE    --- sidebar with default icon
-#'  "table" --- sidebar with table icon. The character should be a valid "font-awesome" icon.
+#'  "table" --- sidebar with table icon. The character string should be a valid "font-awesome" icon.
 #'  }
 #'
 #'@examples
@@ -96,13 +96,13 @@
 #' create_new_application(name = 'mytestapp', location = tempdir(), sampleapp = TRUE)
 #' # sample app named 'mytestapp' with a right sidebar using a custom icon created in a temp dir
 #' create_new_application(name = 'mytestapp', location = tempdir(), sampleapp = TRUE, 
-#' right_sidebar = "table")
+#' rightsidebar = "table")
 #' 
 #' # blank app named 'myblankapp' created in a temp dir
 #' create_new_application(name = 'mytestapp', location = tempdir())
 #'
 #' @export
-create_new_application <- function(name, location, sampleapp = FALSE, reset = TRUE, right_sidebar = FALSE) {
+create_new_application <- function(name, location, sampleapp = FALSE, reset = TRUE, rightsidebar = FALSE) {
     usersep <- .Platform$file.sep
     newloc <- paste(location, name, sep = usersep)
 
@@ -117,14 +117,14 @@ create_new_application <- function(name, location, sampleapp = FALSE, reset = TR
     else {
         dashboard_plus <- FALSE
         right_sidebar_icon <- NULL
-        if (!is.null(right_sidebar)) {
-            if (class(right_sidebar) == "logical") {
-                if (right_sidebar) { dashboard_plus <- TRUE  }
-            } else if (class(right_sidebar) == "character") {
+        if (!is.null(rightsidebar)) {
+            if (class(rightsidebar) == "logical") {
+                if (rightsidebar) { dashboard_plus <- TRUE  }
+            } else if (class(rightsidebar) == "character") {
                 dashboard_plus <- TRUE
-                right_sidebar_icon <- right_sidebar
+                right_sidebar_icon <- rightsidebar
             } else {
-                stop("Framework creation could not proceed, invalid type for right_sidebar, only logical or character allowed")
+                stop("Framework creation could not proceed, invalid type for rightsidebar, only logical or character allowed")
             }
         }
         .create_dirs(newloc, usersep)

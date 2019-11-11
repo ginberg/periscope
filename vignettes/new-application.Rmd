@@ -318,9 +318,15 @@ a call to *add_ui_sidebar_right()*.
 
 ```{r, eval=F}
 # -- Create UI sidebar Elements
-s1 <- rightSidebarTabContent(id = 1, icon = "desktop", title = "Tab 1", active = TRUE, 
-                              div(helpText(align = "center", "Sample UI Text"),
-                                  selectInput("sample1", "A Select", c("A", "B", "C")) ))
+s1 <- rightSidebarTabContent(id = 1, 
+                             icon = "desktop", 
+                             title = "Tab 1", 
+                             active = TRUE, 
+                             div(helpText(align = "center", 
+                                          "Sample UI Text"),
+                                 selectInput("sample1", 
+                                             "A Select", 
+                                             c("A", "B", "C"))))
                   
 # -- Register Basic Elements in the ORDER SHOWN in the UI
 add_ui_sidebar_right(list(s1), append = FALSE)
