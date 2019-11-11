@@ -100,9 +100,22 @@ name\\www\\img\\tooltip.png
 }
 }
 
+\section{Right Sidebar}{
+
+ \preformatted{
+ value
+ FALSE   --- no sidebar
+ TRUE    --- sidebar with default icon
+ "table" --- sidebar with table icon. The character should be a valid "font-awesome" icon.
+ }
+}
+
 \examples{
 # sample app named 'mytestapp' created in a temp dir
 create_new_application(name = 'mytestapp', location = tempdir(), sampleapp = TRUE)
+# sample app named 'mytestapp' with a right sidebar using a custom icon created in a temp dir
+create_new_application(name = 'mytestapp', location = tempdir(), sampleapp = TRUE, 
+right_sidebar = "table")
 
 # blank app named 'myblankapp' created in a temp dir
 create_new_application(name = 'mytestapp', location = tempdir())

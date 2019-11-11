@@ -18,7 +18,7 @@ The UI element should be of type rightSidebarTabContent.
 }
 \section{Shiny Usage}{
 
-Call this function after creating elements in \code{program/ui_sidebar.R} to register
+Call this function after creating elements in \code{program/ui_sidebar_right.R} to register
 them to the application framework and show them on the right
 dashboard sidebar
 }
@@ -38,4 +38,6 @@ add_ui_sidebar_right(list(s1), append = FALSE)
 \link[periscope]{add_ui_sidebar_basic}
 
 \link[periscope]{add_ui_body}
+
+\link[shinydashboardPlus]{rightSidebarTabContent}
 }

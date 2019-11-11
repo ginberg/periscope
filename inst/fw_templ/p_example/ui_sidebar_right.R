@@ -1,5 +1,5 @@
 # ----------------------------------------
-# --       PROGRAM ui_sidebar_right.R         --
+# --     PROGRAM ui_sidebar_right.R     --
 # ----------------------------------------
 # USE: Create UI elements for the
 #      application sidebar (right side on
@@ -18,7 +18,7 @@
 
 
 # ----------------------------------------
-# --     RIGHT SIDEBAR ELEMENT CREATION       --
+# --   RIGHT SIDEBAR ELEMENT CREATION   --
 # ----------------------------------------
 
 # -- Create Elements

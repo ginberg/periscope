@@ -99,12 +99,13 @@ add_ui_sidebar_advanced <- function(elementlist = NULL,
 #' registered elements or replace the currently registered elements completely
 #'
 #' @section Shiny Usage:
-#' Call this function after creating elements in \code{program/ui_sidebar.R} to register
+#' Call this function after creating elements in \code{program/ui_sidebar_right.R} to register
 #' them to the application framework and show them on the right
 #' dashboard sidebar
 #'
 #' @seealso \link[periscope]{add_ui_sidebar_basic}
 #' @seealso \link[periscope]{add_ui_body}
+#' @seealso \link[shinydashboardPlus]{rightSidebarTabContent}
 #'
 #' @examples 
 #' require(shiny)
