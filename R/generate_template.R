@@ -12,7 +12,8 @@
 #' @param name name for the new application and directory
 #' @param location base path for creation of \code{name}
 #' @param sampleapp whether to create a sample shiny application
-#' @param right_sidebar parameter to set the right_sidebar. It can be TRUE/FALSE or a custom icon. See ?shiny::icon() for how to create an icon.
+#' @param reset whether the reset button should be added on the Advanced (left) sidebar.
+#' @param right_sidebar parameter to set the right_sidebar. It can be TRUE/FALSE or a character containing the name of a shiny::icon().
 #'
 #' @section Name:
 #' The \code{name} directory must not exist in \code{location}.  If the code
@@ -90,7 +91,7 @@
 #' create_new_application(name = 'mytestapp', location = tempdir())
 #'
 #' @export
-create_new_application <- function(name, location, sampleapp = FALSE, right_sidebar = FALSE) {
+create_new_application <- function(name, location, sampleapp = FALSE, reset = TRUE, right_sidebar = FALSE) {
     usersep <- .Platform$file.sep
     newloc <- paste(location, name, sep = usersep)
 
@@ -106,17 +107,20 @@ create_new_application <- function(name, location, sampleapp = FALSE, right_side
         dashboard_plus <- FALSE
         right_sidebar_icon <- NULL
         if (!is.null(right_sidebar)) {
-            if (class(right_sidebar) == "logical" && right_sidebar) {
-                dashboard_plus <- TRUE  
-            } else if (class(right_sidebar) == "shiny.tag") {
+            if (class(right_sidebar) == "logical") {
+                if (right_sidebar) { dashboard_plus <- TRUE  }
+            } else if (class(right_sidebar) == "character") {
                 dashboard_plus <- TRUE
                 right_sidebar_icon <- right_sidebar
+            } else {
+                stop("Framework creation could not proceed, invalid type for right_sidebar, only logical or character allowed")
             }
         }
         .create_dirs(newloc, usersep)
         .copy_fw_files(newloc, usersep, dashboard_plus)
         .copy_program_files(newloc, usersep, sampleapp, dashboard_plus)
         .set_right_sidebar_icon(right_sidebar_icon)
+        .set_reset_enabled(reset)
 
         message("Framework creation was successful.")
     }
@@ -186,7 +190,10 @@ create_new_application <- function(name, location, sampleapp = FALSE, right_side
                "ui_body.R",
                "ui_sidebar.R")
     if (dashboard_plus) {
-        files <- c(files, "server_local_plus.R", "ui_sidebar_right.R")
+        files <- c(files, "ui_sidebar_right.R")
+        if (sampleapp) {
+            files <- c(files, "server_local_plus.R")
+        }
     } else {
         files <- c(files, "server_local.R")
     }
@@ -201,7 +208,7 @@ create_new_application <- function(name, location, sampleapp = FALSE, right_side
             con = system.file(sourcedir, file, package = "periscope")),
             con = paste(targetdir, file, sep = usersep))
     }
-    if (dashboard_plus) {
+    if (sampleapp && dashboard_plus) {
         file.rename(paste(targetdir, "server_local_plus.R", sep = usersep), paste(targetdir, "server_local.R", sep = usersep))
     }
 

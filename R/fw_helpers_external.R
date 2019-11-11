@@ -6,7 +6,9 @@
 fw_server_setup <- function(input, output, session, logger) {
     logfile <- shiny::isolate(.setup_logging(session, logger))
     shiny::callModule(.bodyFooter, "footerId",   logfile)
-    shiny::callModule(.appReset,   "appResetId", logger)
+    if (shiny::isolate(.g_opts$reset_enabled)) {
+        shiny::callModule(.appReset, "appResetId", logger)
+    }
 }
 
 # Reset app options
@@ -82,7 +84,7 @@ fw_create_sidebar <- function() {
                         shiny::tabPanel(
                             shiny::isolate(.g_opts$side_advanced_label),
                             adv,
-                            .appResetButton("appResetId"))) )
+                            switch(shiny::isolate(.g_opts$reset_enabled) + 1, NULL, .appResetButton("appResetId")))) )
             }
             else {
                 shiny::div(class = "notab-content",

@@ -4,7 +4,7 @@
 \alias{create_new_application}
 \title{Create a new templated framework application}
 \usage{
-create_new_application(name, location, sampleapp = FALSE,
+create_new_application(name, location, sampleapp = FALSE, reset = TRUE,
   right_sidebar = FALSE)
 }
 \arguments{
@@ -14,7 +14,9 @@ create_new_application(name, location, sampleapp = FALSE,
 
 \item{sampleapp}{whether to create a sample shiny application}
 
-\item{right_sidebar}{parameter to set the right_sidebar. It can be TRUE/FALSE or a custom icon. See ?shiny::icon() for how to create an icon.}
+\item{reset}{whether the reset button should be added on the Advanced (left) sidebar.}
+
+\item{right_sidebar}{parameter to set the right_sidebar. It can be TRUE/FALSE or a character containing the name of a shiny::icon().}
 }
 \description{
 Creates ready-to-use templated application files using the periscope

@@ -61,11 +61,21 @@ test_that("create_new_application sample right_sidebar", {
     appTemp.dir   <- tempdir()
     appTemp       <- tempfile(pattern = "TestThatApp", tmpdir = appTemp.dir)
     appTemp.name  <- gsub('\\\\|/', '', (gsub(appTemp.dir, "", appTemp, fixed = T)))
-    right_sidebar <- icon("gears")
+    right_sidebar <- "gears"
     
     expect_message(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = TRUE, right_sidebar = right_sidebar), 
                    "Framework creation was successful.")
-    expect_cleanup_create_new_application(appTemp, sampleapp = TRUE, !is.null(right_sidebar))
+    expect_cleanup_create_new_application(appTemp, sampleapp = TRUE, dashboard_plus = !is.null(right_sidebar))
+})
+
+test_that("create_new_application no reset button", {
+    appTemp.dir   <- tempdir()
+    appTemp       <- tempfile(pattern = "TestThatApp", tmpdir = appTemp.dir)
+    appTemp.name  <- gsub('\\\\|/', '', (gsub(appTemp.dir, "", appTemp, fixed = T)))
+    
+    expect_message(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = TRUE, reset = FALSE), 
+                   "Framework creation was successful.")
+    expect_cleanup_create_new_application(appTemp, sampleapp = TRUE)
 })
 
 test_that("create_new_application invalid location", {

@@ -19,6 +19,7 @@
     app_version         = "1.0.0",
     data_download_types = c("csv", "xlsx", "tsv", "txt"),
     plot_download_types = c("png", "jpeg", "tiff", "bmp"),
+    reset_enabled       = TRUE,
     reset_wait          = 5000,  #milliseconds
     show_userlog        = TRUE,
     body_elements       = c(),
@@ -40,6 +41,11 @@
         .g_opts$sidebar_right_icon <- right_sidebar_icon
     }
 }
+
+.set_reset_enabled <- function(reset_enabled) {
+    .g_opts$reset_enabled <- reset_enabled
+}
+
 
 # UI ----------------------------
 # Creates the tags and JS for the processing image and text in the header
