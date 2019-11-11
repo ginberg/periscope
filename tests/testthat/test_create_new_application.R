@@ -65,7 +65,7 @@ test_that("create_new_application sample right_sidebar", {
     
     expect_message(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = TRUE, rightsidebar = right_sidebar), 
                    "Framework creation was successful.")
-    expect_cleanup_create_new_application(appTemp, sampleapp = TRUE, dashboard_plus = !is.null(rightsidebar))
+    expect_cleanup_create_new_application(appTemp, sampleapp = TRUE, dashboard_plus = !is.null(right_sidebar))
 })
 
 test_that("create_new_application no reset button", {
