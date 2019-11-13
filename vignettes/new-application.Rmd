@@ -185,7 +185,7 @@ library(periscope)
 app_dir = tempdir()
 create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE)
 # application without a reset button
-create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE, reset = FALSE)
+create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE, resetbutton = FALSE)
 # application with a right sidebar using the default icon
 create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE, rightsidebar = TRUE)
 # application with a right sidebar using a custom icon
@@ -221,7 +221,7 @@ library(periscope)
 app_dir = tempdir()
 create_new_application(name = 'mytestapp', location = app_dir)
 # application without a reset button
-create_new_application(name = 'mytestapp', location = app_dir, reset = FALSE)
+create_new_application(name = 'mytestapp', location = app_dir, resetbutton = FALSE)
 # application with a right sidebar using the default icon
 create_new_application(name = 'mytestapp', location = app_dir, rightsidebar = TRUE)
 # application with a right sidebar using a custom icon
