@@ -73,7 +73,7 @@ test_that("create_new_application no reset button", {
     appTemp       <- tempfile(pattern = "TestThatApp", tmpdir = appTemp.dir)
     appTemp.name  <- gsub('\\\\|/', '', (gsub(appTemp.dir, "", appTemp, fixed = T)))
     
-    expect_message(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = TRUE, reset = FALSE), 
+    expect_message(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = TRUE, resetbutton = FALSE), 
                    "Framework creation was successful.")
     expect_cleanup_create_new_application(appTemp, sampleapp = TRUE)
 })

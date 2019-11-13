@@ -19,7 +19,7 @@
     app_version         = "1.0.0",
     data_download_types = c("csv", "xlsx", "tsv", "txt"),
     plot_download_types = c("png", "jpeg", "tiff", "bmp"),
-    reset_enabled       = TRUE,
+    reset_button        = TRUE,
     reset_wait          = 5000,  #milliseconds
     show_userlog        = TRUE,
     body_elements       = c(),
@@ -34,16 +34,6 @@
 .reset_app_options <- function() {
     .g_opts$side_basic    <- .g_sidebar_default_value
     .g_opts$side_advanced <- .g_sidebar_default_value
-}
-
-.set_right_sidebar_icon <- function(right_sidebar_icon) {
-    if (!is.null(right_sidebar_icon)) {
-        .g_opts$sidebar_right_icon <- right_sidebar_icon
-    }
-}
-
-.set_reset_enabled <- function(reset_enabled) {
-    .g_opts$reset_enabled <- reset_enabled
 }
 
 

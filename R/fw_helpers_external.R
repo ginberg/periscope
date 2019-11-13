@@ -6,7 +6,7 @@
 fw_server_setup <- function(input, output, session, logger) {
     logfile <- shiny::isolate(.setup_logging(session, logger))
     shiny::callModule(.bodyFooter, "footerId",   logfile)
-    if (shiny::isolate(.g_opts$reset_enabled)) {
+    if (shiny::isolate(.g_opts$reset_button)) {
         shiny::callModule(.appReset, "appResetId", logger)
     }
 }
@@ -50,7 +50,7 @@ fw_create_header <- function() {
 }
 
 # Framework UI Header Creation that includes a right sidebar
-fw_create_header_plus <- function() {
+fw_create_header_plus <- function(sidebar_right_icon = shiny::isolate(.g_opts$sidebar_right_icon)) {
     return(
         shinydashboardPlus::dashboardHeaderPlus(
             title = shiny::div(class = "periscope-busy-ind",
@@ -59,12 +59,12 @@ fw_create_header_plus <- function() {
                                           hspace = "5px",
                                           src = "img/loader.gif") ),
             titleWidth = shiny::isolate(.g_opts$sidebar_size),
-            enable_rightsidebar = TRUE, rightSidebarIcon = shiny::isolate(.g_opts$sidebar_right_icon))
+            enable_rightsidebar = TRUE, rightSidebarIcon = sidebar_right_icon)
     )
 }
 
 # Framework UI Left Sidebar Creation
-fw_create_sidebar <- function() {
+fw_create_sidebar <- function(resetbutton = shiny::isolate(.g_opts$reset_button)) {
     basic <- shiny::isolate(.g_opts$side_basic)
     adv   <- shiny::isolate(.g_opts$side_advanced)
 
@@ -84,7 +84,7 @@ fw_create_sidebar <- function() {
                         shiny::tabPanel(
                             shiny::isolate(.g_opts$side_advanced_label),
                             adv,
-                            switch(shiny::isolate(.g_opts$reset_enabled) + 1, NULL, .appResetButton("appResetId")))) )
+                            switch(resetbutton + 1, NULL, .appResetButton("appResetId")))))
             }
             else {
                 shiny::div(class = "notab-content",

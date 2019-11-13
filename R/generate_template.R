@@ -12,7 +12,7 @@
 #' @param name name for the new application and directory
 #' @param location base path for creation of \code{name}
 #' @param sampleapp whether to create a sample shiny application
-#' @param reset whether the reset button should be added on the Advanced (left) sidebar.
+#' @param resetbutton whether the reset button should be added on the Advanced (left) sidebar.
 #' @param rightsidebar parameter to set the right sidebar. It can be TRUE/FALSE or a character containing the name of a shiny::icon().
 #'
 #' @section Name:
@@ -102,7 +102,7 @@
 #' create_new_application(name = 'mytestapp', location = tempdir())
 #'
 #' @export
-create_new_application <- function(name, location, sampleapp = FALSE, reset = TRUE, rightsidebar = FALSE) {
+create_new_application <- function(name, location, sampleapp = FALSE, resetbutton = TRUE, rightsidebar = FALSE) {
     usersep <- .Platform$file.sep
     newloc <- paste(location, name, sep = usersep)
 
@@ -128,10 +128,8 @@ create_new_application <- function(name, location, sampleapp = FALSE, reset = TR
             }
         }
         .create_dirs(newloc, usersep)
-        .copy_fw_files(newloc, usersep, dashboard_plus)
-        .copy_program_files(newloc, usersep, sampleapp, dashboard_plus)
-        .set_right_sidebar_icon(right_sidebar_icon)
-        .set_reset_enabled(reset)
+        .copy_fw_files(newloc, usersep, resetbutton, dashboard_plus, right_sidebar_icon)
+        .copy_program_files(newloc, usersep, sampleapp, resetbutton, dashboard_plus)
 
         message("Framework creation was successful.")
     }
@@ -162,7 +160,7 @@ create_new_application <- function(name, location, sampleapp = FALSE, reset = TR
 }
 
 # Create Framework Files ----------------------------
-.copy_fw_files <- function(newloc, usersep, dashboard_plus = FALSE) {
+.copy_fw_files <- function(newloc, usersep, resetbutton = TRUE, dashboard_plus = FALSE, right_sidebar_icon = NULL) {
     files <- c("global.R",
                "server.R")
     if (dashboard_plus) {
@@ -178,6 +176,16 @@ create_new_application <- function(name, location, sampleapp = FALSE, reset = TR
     }
     if (dashboard_plus) {
         file.rename(paste(newloc, "ui_plus.R", sep = usersep), paste(newloc, "ui.R", sep = usersep))
+        if (!is.null(right_sidebar_icon)) {
+            writeLines(gsub("fw_create_header_plus\\(", paste0("fw_create_header_plus\\(sidebar_right_icon = '", right_sidebar_icon, "'"), 
+                            readLines(con = paste(newloc, "ui.R", sep = usersep))), 
+                       con = paste(newloc, "ui.R", sep = usersep))
+        }
+    }
+    if (!resetbutton) {
+        writeLines(gsub("fw_create_sidebar\\(", "fw_create_sidebar\\(resetbutton = FALSE", 
+                        readLines(con = paste(newloc, "ui.R", sep = usersep))), 
+                   con = paste(newloc, "ui.R", sep = usersep))
     }
 
     #subdir copies
@@ -194,12 +202,17 @@ create_new_application <- function(name, location, sampleapp = FALSE, reset = TR
 }
 
 # Create Program Files ----------------------------
-.copy_program_files <- function(newloc, usersep, sampleapp, dashboard_plus = FALSE) {
+.copy_program_files <- function(newloc, usersep, sampleapp, resetbutton = TRUE, dashboard_plus = FALSE) {
     files <- c("global.R",
                "server_global.R",
                "server_local.R",
-               "ui_body.R",
-               "ui_sidebar.R")
+               "ui_body.R")
+    if (sampleapp && !resetbutton) {
+        files <- c(files, "ui_sidebar_no_reset.R")
+    } else {
+        files <- c(files, "ui_sidebar.R")
+    }
+               
     if (dashboard_plus) {
         files <- c(files, "ui_sidebar_right.R")
         if (sampleapp) {
@@ -221,6 +234,9 @@ create_new_application <- function(name, location, sampleapp = FALSE, reset = TR
     }
     if (sampleapp && dashboard_plus) {
         file.rename(paste(targetdir, "server_local_plus.R", sep = usersep), paste(targetdir, "server_local.R", sep = usersep))
+    }
+    if (sampleapp && !resetbutton) {
+        file.rename(paste(targetdir, "ui_sidebar_no_reset.R", sep = usersep), paste(targetdir, "ui_sidebar.R", sep = usersep))
     }
 
     #subdir copies for sampleapp

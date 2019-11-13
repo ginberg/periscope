@@ -4,8 +4,8 @@
 \alias{create_new_application}
 \title{Create a new templated framework application}
 \usage{
-create_new_application(name, location, sampleapp = FALSE, reset = TRUE,
-  rightsidebar = FALSE)
+create_new_application(name, location, sampleapp = FALSE,
+  resetbutton = TRUE, rightsidebar = FALSE)
 }
 \arguments{
 \item{name}{name for the new application and directory}
@@ -14,7 +14,7 @@ create_new_application(name, location, sampleapp = FALSE, reset = TRUE,
 
 \item{sampleapp}{whether to create a sample shiny application}
 
-\item{reset}{whether the reset button should be added on the Advanced (left) sidebar.}
+\item{resetbutton}{whether the reset button should be added on the Advanced (left) sidebar.}
 
 \item{rightsidebar}{parameter to set the right sidebar. It can be TRUE/FALSE or a character containing the name of a shiny::icon().}
 }
