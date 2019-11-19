@@ -13,7 +13,8 @@
 #' @param location base path for creation of \code{name}
 #' @param sampleapp whether to create a sample shiny application
 #' @param resetbutton whether the reset button should be added on the Advanced (left) sidebar.
-#' @param rightsidebar parameter to set the right sidebar. It can be TRUE/FALSE or a character containing the name of a shiny::icon().
+#' @param rightsidebar parameter to set the right sidebar. It can be TRUE/FALSE or a character 
+#' containing the name of a shiny::icon().
 #'
 #' @section Name:
 #' The \code{name} directory must not exist in \code{location}.  If the code
@@ -87,13 +88,16 @@
 #'  \preformatted{
 #'  value
 #'  FALSE   --- no sidebar
-#'  TRUE    --- sidebar with default icon
+#'  TRUE    --- sidebar with default icon ('gears').
 #'  "table" --- sidebar with table icon. The character string should be a valid "font-awesome" icon.
 #'  }
+#'
+#'@seealso \link[shiny:icon]{shiny:icon()}
 #'
 #'@examples
 #' # sample app named 'mytestapp' created in a temp dir
 #' create_new_application(name = 'mytestapp', location = tempdir(), sampleapp = TRUE)
+#' 
 #' # sample app named 'mytestapp' with a right sidebar using a custom icon created in a temp dir
 #' create_new_application(name = 'mytestapp', location = tempdir(), sampleapp = TRUE, 
 #' rightsidebar = "table")

@@ -16,7 +16,8 @@ create_new_application(name, location, sampleapp = FALSE,
 
 \item{resetbutton}{whether the reset button should be added on the Advanced (left) sidebar.}
 
-\item{rightsidebar}{parameter to set the right sidebar. It can be TRUE/FALSE or a character containing the name of a shiny::icon().}
+\item{rightsidebar}{parameter to set the right sidebar. It can be TRUE/FALSE or a character 
+containing the name of a shiny::icon().}
 }
 \description{
 Creates ready-to-use templated application files using the periscope
@@ -105,7 +106,7 @@ name\\www\\img\\tooltip.png
  \preformatted{
  value
  FALSE   --- no sidebar
- TRUE    --- sidebar with default icon
+ TRUE    --- sidebar with default icon ('gears').
  "table" --- sidebar with table icon. The character string should be a valid "font-awesome" icon.
  }
 }
@@ -113,6 +114,7 @@ name\\www\\img\\tooltip.png
 \examples{
 # sample app named 'mytestapp' created in a temp dir
 create_new_application(name = 'mytestapp', location = tempdir(), sampleapp = TRUE)
+
 # sample app named 'mytestapp' with a right sidebar using a custom icon created in a temp dir
 create_new_application(name = 'mytestapp', location = tempdir(), sampleapp = TRUE, 
 rightsidebar = "table")
@@ -120,4 +122,7 @@ rightsidebar = "table")
 # blank app named 'myblankapp' created in a temp dir
 create_new_application(name = 'mytestapp', location = tempdir())
 
+}
+\seealso{
+\link[shiny:icon]{shiny:icon()}
 }

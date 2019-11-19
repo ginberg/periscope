@@ -1,5 +1,5 @@
 # -------------------------------------------------
-# --              FRAMEWORK ui.R             --
+# --               FRAMEWORK ui.R                --
 # -------------------------------------------------
 # NOTEs:                                         --
 # Program code goes in "program" directory files --
