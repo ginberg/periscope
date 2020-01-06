@@ -133,8 +133,8 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
             }
         }
         .create_dirs(newloc, usersep)
-        .copy_fw_files(newloc, usersep, resetbutton, dashboard_plus, right_sidebar_icon)
-        .copy_program_files(newloc, usersep, sampleapp, resetbutton, dashboard_plus, leftmenu)
+        .copy_fw_files(newloc, usersep, resetbutton, dashboard_plus, right_sidebar_icon, leftmenu)
+        .copy_program_files(newloc, usersep, sampleapp, resetbutton, dashboard_plus)
 
         message("Framework creation was successful.")
     }
@@ -165,13 +165,16 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
 }
 
 # Create Framework Files ----------------------------
-.copy_fw_files <- function(newloc, usersep, resetbutton = TRUE, dashboard_plus = FALSE, right_sidebar_icon = NULL) {
+.copy_fw_files <- function(newloc, usersep, resetbutton = TRUE, dashboard_plus = FALSE, right_sidebar_icon = NULL, left_menu = FALSE) {
     files <- c("global.R",
                "server.R")
     if (dashboard_plus) {
         files <- c(files, "ui_plus.R")
     } else {
         files <- c(files, "ui.R")
+    }
+    if (left_menu) {
+        files <- c(files, "ui_left_menu.R")
     }
 
     for (file in files) {
@@ -192,6 +195,13 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
                         readLines(con = paste(newloc, "ui.R", sep = usersep))), 
                    con = paste(newloc, "ui.R", sep = usersep))
     }
+    if (left_menu) {
+        ui_content <- readLines(con = paste(newloc, "ui.R", sep = usersep))
+        ui_body_pos <- match(ui_content[grepl("ui_body.R", ui_content)], ui_content)
+        ui_content[ui_body_pos + 2] <- 'source(paste("program", "ui_left_menu.R", sep = .Platform$file.sep), local = TRUE)'
+        writeLines(ui_content, con = paste(newloc, "ui.R", sep = usersep))
+        file.copy(paste(newloc, "ui_left_menu.R", sep = usersep), paste(newloc, "program", "ui_left_menu.R", sep = usersep))
+    }
 
     #subdir copies
     imgs <- c("loader.gif", "tooltip.png")
@@ -207,7 +217,7 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
 }
 
 # Create Program Files ----------------------------
-.copy_program_files <- function(newloc, usersep, sampleapp, resetbutton = TRUE, dashboard_plus = FALSE, left_menu = FALSE) {
+.copy_program_files <- function(newloc, usersep, sampleapp, resetbutton = TRUE, dashboard_plus = FALSE) {
     files <- c("global.R",
                "server_global.R",
                "server_local.R",
@@ -225,9 +235,6 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
         }
     } else {
         files <- c(files, "server_local.R")
-    }
-    if (left_menu) {
-        files <- c(files, "ui_left_menu.R")
     }
 
     targetdir <- paste(newloc, "program", sep = usersep)
