@@ -5,7 +5,7 @@
 \title{Create a new templated framework application}
 \usage{
 create_new_application(name, location, sampleapp = FALSE,
-  resetbutton = TRUE, rightsidebar = FALSE)
+  resetbutton = TRUE, rightsidebar = FALSE, leftmenu = FALSE)
 }
 \arguments{
 \item{name}{name for the new application and directory}
@@ -18,6 +18,8 @@ create_new_application(name, location, sampleapp = FALSE,
 
 \item{rightsidebar}{parameter to set the right sidebar. It can be TRUE/FALSE or a character 
 containing the name of a shiny::icon().}
+
+\item{leftmenu}{parameter to set the left menu.}
 }
 \description{
 Creates ready-to-use templated application files using the periscope

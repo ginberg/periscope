@@ -129,6 +129,37 @@ add_ui_sidebar_right <- function(elementlist = NULL, append = FALSE) {
     invisible(NULL)
 }
 
+#' Add UI Elements to the Right Sidebar
+#'
+#' This function registers UI elements at the right dashboard sidebar. 
+#' The UI element should be of type rightSidebarTabContent.
+#'
+#' @param elementlist list of UI elements to add to the sidebar tab
+#' @section Shiny Usage:
+#' Call this function after creating elements in \code{program/ui_sidebar_right.R} to register
+#' them to the application framework and show them on the right
+#' dashboard sidebar
+#'
+#' @seealso \link[periscope]{add_ui_sidebar_basic}
+#' @seealso \link[periscope]{add_ui_body}
+#' @seealso \link[shinydashboardPlus]{rightSidebarTabContent}
+#'
+#' @examples 
+#' require(shiny)
+#' require(shinydashboardPlus)
+#' 
+#' s1 <- rightSidebarTabContent(id = 1, icon = "desktop", title = "Tab 1 - Plots", active = TRUE, 
+#'                              div(helpText(align = "center", "Sample UI Text"),
+#'                                  selectInput("sample1", "A Select", c("A", "B", "C")) ))
+#'  
+#' add_ui_menu_left(list(s1))
+#' 
+#' @export
+add_ui_menu_left <- function(elementlist = NULL) {
+    .g_opts$menu_left <- elementlist
+    
+    invisible(NULL)
+}
 
 #' Add UI Elements to the Body area
 #'
