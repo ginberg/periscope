@@ -1,7 +1,8 @@
 # FRAMEWORK HELPER FUNCTIONS -------
 # -- (INTERNAL ONLY - No Exports) --
 
-.g_sidebar_default_value <- c()
+.g_sidebar_default_value  <- c()
+.g_menu_top_default_value <- NULL
 
 # .g_opts --------------------
 # holds the app options values
@@ -28,13 +29,14 @@
     side_advanced       = .g_sidebar_default_value,
     side_advanced_label = "Advanced",
     sidebar_right_icon  = "gears",
-    menu_left           = NULL
+    menu_top            = .g_menu_top_default_value
 )
 
 # reset app options
 .reset_app_options <- function() {
     .g_opts$side_basic    <- .g_sidebar_default_value
     .g_opts$side_advanced <- .g_sidebar_default_value
+    .g_opts$menu_top      <- .g_menu_top_default_value
 }
 
 
