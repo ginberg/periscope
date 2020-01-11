@@ -14,7 +14,7 @@ This function registers UI elements at the top menubar.
 }
 \section{Shiny Usage}{
 
-Call this function after creating elements in \code{program/ui_top_menu.R} to register
+Call this function after creating elements in \code{program/ui_left_menu.R} to register
 them to the application framework.
 }
 

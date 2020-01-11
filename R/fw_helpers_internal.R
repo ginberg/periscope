@@ -57,7 +57,7 @@
                           paste("<a href='", app_info,
                                 "' target = '_blank'>",
                                 app_title, "</a>"))),
-            "</div>\").insertAfter($(\"a.sidebar-toggle\"));")))
+            "</div>\").insertBefore($(\"div.navbar-custom-menu\").not('[style]'));")))
     return(items)
 }
 
@@ -116,7 +116,7 @@
                     line-height: 50px;
                     font-size: x-large;
                     color: white;
-                    width: 80%;
+                    width: 60%;
                     float:left;
                 }
                 .main-header .periscope-title a {

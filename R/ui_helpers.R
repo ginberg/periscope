@@ -135,7 +135,7 @@ add_ui_sidebar_right <- function(elementlist = NULL, append = FALSE) {
 #'
 #' @param elementlist list of UI elements to add to the top menu.
 #' @section Shiny Usage:
-#' Call this function after creating elements in \code{program/ui_top_menu.R} to register
+#' Call this function after creating elements in \code{program/ui_left_menu.R} to register
 #' them to the application framework.
 #'
 #' @seealso \link[periscope]{add_ui_sidebar_basic}

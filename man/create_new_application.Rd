@@ -10,7 +10,7 @@ create_new_application(
   sampleapp = FALSE,
   resetbutton = TRUE,
   rightsidebar = FALSE,
-  topmenu = FALSE
+  leftmenu = FALSE
 )
 }
 \arguments{
@@ -25,7 +25,7 @@ create_new_application(
 \item{rightsidebar}{parameter to set the right sidebar. It can be TRUE/FALSE or a character 
 containing the name of a shiny::icon().}
 
-\item{topmenu}{whether to add a top menu.}
+\item{leftmenu}{whether to add a left menu at the header bar.}
 }
 \description{
 Creates ready-to-use templated application files using the periscope

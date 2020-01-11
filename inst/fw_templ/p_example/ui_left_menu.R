@@ -1,5 +1,5 @@
 # ----------------------------------------
-# --      PROGRAM ui_top_menu.R         --
+# --     PROGRAM ui_left_menu.R         --
 # ----------------------------------------
 # USE: Create UI elements for the
 #      application sidebar (right side on
@@ -23,7 +23,18 @@
 
 # -- Create Elements
 
-dropdown1 <- dropdownButton(
+inputs <- dropdownBlock(
+          id = "mydropdown",
+          title = "Options",
+          prettyToggle(
+            inputId = "na",
+            label_on = "NAs keeped",
+            label_off = "NAs removed",
+            icon_on = icon("check"),
+            icon_off = icon("remove")
+          ))
+
+reports <- dropdownButton(
           label = "Reports",
           icon = icon("sliders"),
           status = "primary",
@@ -31,15 +42,6 @@ dropdown1 <- dropdownButton(
           downloadLink("reportId1", "Report 1"),
           downloadLink("reportId2", "Report 2")
         )
-            
-dropdownMenu <- dropdownMenu(
-    type = "tasks", 
-    badgeStatus = "danger",
-    taskItem(value = 20, color = "aqua", "Refactor code"),
-    taskItem(value = 40, color = "green", "Design new layout"),
-    taskItem(value = 60, color = "yellow", "Another task"),
-    taskItem(value = 80, color = "red", "Write documentation")
-)
 
 # -- Register Basic Elements in the ORDER SHOWN in the UI
-add_ui_menu_top(list(dropdown1, dropdownMenu))
+add_ui_menu_top(list(inputs, reports))

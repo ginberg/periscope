@@ -1,5 +1,5 @@
 # ----------------------------------------
-# --      PROGRAM ui_top_menu.R         --
+# --     PROGRAM ui_left_menu.R         --
 # ----------------------------------------
 # USE: Create UI elements for the
 #      left_menu in the header bar and
