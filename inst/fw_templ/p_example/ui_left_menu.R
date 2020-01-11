@@ -2,10 +2,9 @@
 # --     PROGRAM ui_left_menu.R         --
 # ----------------------------------------
 # USE: Create UI elements for the
-#      application sidebar (right side on
-#      the desktop; contains options) and
+#      left side of the header bar and
 #      ATTACH them to the UI by calling
-#      add_ui_sidebar_right()
+#      add_ui_menu_left()
 #
 # NOTEs:
 #   - All variables/functions here are
@@ -44,4 +43,4 @@ reports <- dropdownButton(
         )
 
 # -- Register Basic Elements in the ORDER SHOWN in the UI
-add_ui_menu_top(list(inputs, reports))
+add_ui_menu_left(list(inputs, reports))

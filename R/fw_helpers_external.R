@@ -60,7 +60,7 @@ fw_create_header_plus <- function(sidebar_right_icon = shiny::isolate(.g_opts$si
                                           src = "img/loader.gif") ),
             titleWidth = shiny::isolate(.g_opts$sidebar_size),
             enable_rightsidebar = TRUE, rightSidebarIcon = sidebar_right_icon,
-            left_menu = shiny::isolate(.g_opts$menu_top)))
+            left_menu = shiny::isolate(.g_opts$menu_left)))
 }
 
 # Framework UI Left Sidebar Creation

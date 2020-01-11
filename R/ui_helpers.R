@@ -146,14 +146,14 @@ add_ui_sidebar_right <- function(elementlist = NULL, append = FALSE) {
 #' 
 #' button <- actionButton("inputId", "Label")
 #'  
-#' add_ui_menu_top(list(button))
+#' add_ui_menu_left(list(button))
 #' 
 #' @export
-add_ui_menu_top <- function(elementlist = NULL) {
+add_ui_menu_left <- function(elementlist = NULL) {
     if (!is.null(elementlist) && length(elementlist) > 0) {
-        .g_opts$menu_top <- elementlist
+        .g_opts$menu_left <- elementlist
     } else {
-        .g_opts$menu_top <- NULL
+        .g_opts$menu_left <- NULL
     }
     
     invisible(NULL)

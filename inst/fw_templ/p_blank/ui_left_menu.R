@@ -4,7 +4,7 @@
 # USE: Create UI elements for the
 #      left_menu in the header bar and
 #      ATTACH them to the UI by calling
-#      add_ui_menu_top()
+#      add_ui_menu_left()
 #
 # NOTEs:
 #   - All variables/functions here are
@@ -23,4 +23,4 @@
 
 
 # -- Register Menu Elements in the ORDER SHOWN in the UI
-add_ui_menu_top(list())
+add_ui_menu_left(list())
