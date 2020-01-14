@@ -1,4 +1,9 @@
-# Conversion functions
+# Conversion functions for existing applications.
+
+
+ui_filename     <- "ui.R"
+reset_button_expression    <- "fw_create_sidebar\\(resetbutton = FALSE\\)"
+no_reset_button_expression <- "fw_create_sidebar\\(\\)"
 
 # Checks if the location contains a periscope application.
 .is_periscope_app <- function(location = ".") {
@@ -15,7 +20,6 @@
 #'
 #' @export
 remove_reset_button <- function(location) {
-    
     tryCatch({
         if (is.null(location) || location == "") {
             warning("Remove reset button conversion could not proceed, location cannot be empty!")
@@ -30,19 +34,13 @@ remove_reset_button <- function(location) {
             usersep <- .Platform$file.sep
             
             files_updated <- c()
+            ui_content <- readLines(con = paste(location, ui_filename, sep = usersep))
             # update ui if needed
-            ui_content <- readLines(con = paste(location, "ui.R", sep = usersep))
-            if (!any(grepl("fw_create_sidebar\\(resetbutton", ui_content))) {
-                writeLines(gsub("fw_create_sidebar\\(", "fw_create_sidebar\\(resetbutton = FALSE", ui_content), 
-                           con = paste(location, "ui.R", sep = usersep))
-                files_updated <- c(files_updated, "ui.R")
+            if (!any(grepl(reset_button_expression, ui_content))) {
+                writeLines(gsub(no_reset_button_expression, reset_button_expression, ui_content), 
+                           con = paste(location, ui_filename, sep = usersep))
+                files_updated <- c(files_updated, ui_filename)
             }
-            
-            # should we remove the (possible) reset button message as well?
-            # if (sampleapp && !resetbutton) {
-            #     file.rename(paste(targetdir, "ui_sidebar_no_reset.R", sep = usersep), paste(targetdir, "ui_sidebar.R", sep = usersep))
-            # }
-            
             if (length(files_updated) > 0) {
                 message(paste("Remove reset button conversion was successful. File(s) updated:",  paste(files_updated, collapse = ",")))
             } else {
@@ -53,6 +51,45 @@ remove_reset_button <- function(location) {
     warning = function(w) {
         warning(w$message, call. = FALSE)
     })
-    
+    invisible(NULL)
+}
+
+#' Add the reset button to an existing application.
+#'
+#' @param location path of the existing application.
+#'
+#' @export
+add_reset_button <- function(location) {
+    tryCatch({
+        if (is.null(location) || location == "") {
+            warning("Add reset button conversion could not proceed, location cannot be empty!")
+        }
+        else if (!dir.exists(location)) {
+            warning("Add reset button conversion could not proceed, location=<", location, "> does not exist!")
+        }
+        else if (!.is_periscope_app(location)) {
+            warning("Add reset button conversion could not proceed, location=<", location, "> does not contain a valid periscope application!")
+        }
+        else {
+            usersep <- .Platform$file.sep
+            
+            files_updated <- c()
+            ui_content <- readLines(con = paste(location, ui_filename, sep = usersep))
+            # update ui if needed
+            if (any(grepl(reset_button_expression, ui_content))) {
+                writeLines(gsub(reset_button_expression, no_reset_button_expression, ui_content), 
+                           con = paste(location, ui_filename, sep = usersep))
+                files_updated <- c(files_updated, ui_filename)
+            }
+            if (length(files_updated) > 0) {
+                message(paste("Add reset button conversion was successful. File(s) updated:",  paste(files_updated, collapse = ",")))
+            } else {
+                message("Reset button already available, no conversion needed")  
+            }
+        }
+    },
+    warning = function(w) {
+        warning(w$message, call. = FALSE)
+    })
     invisible(NULL)
 }
