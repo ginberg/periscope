@@ -72,8 +72,13 @@ fw_create_sidebar <- function(resetbutton = shiny::isolate(.g_opts$reset_button)
         adv[[length(adv) + 1]] <- .appResetButton("appResetId")
     }
     
-    return(
-        shinydashboard::dashboardSidebar(
+    if (is.null(basic[[1]]) && is.null(adv[[1]])) {
+        result <- shinydashboard::dashboardSidebar(width = shiny::isolate(.g_opts$sidebar_size),
+                                                   collapsed = TRUE,
+                                                   .header_injection(),             #injected header elements
+                                                   .right_sidebar_injection())
+    } else {
+        result <- shinydashboard::dashboardSidebar(
             width = shiny::isolate(.g_opts$sidebar_size),
             .header_injection(),             #injected header elements
             .right_sidebar_injection(),
@@ -97,7 +102,9 @@ fw_create_sidebar <- function(resetbutton = shiny::isolate(.g_opts$reset_button)
                 shiny::div(class = "notab-content",
                            adv)
             }
-        ) )
+        )
+    }
+    result
 }
 
 # Framework UI Right Sidebar Creation
