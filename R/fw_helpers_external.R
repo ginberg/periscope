@@ -76,8 +76,9 @@ fw_create_sidebar <- function(resetbutton = shiny::isolate(.g_opts$reset_button)
         # TODO remove 'sidebar-toggle' element and make color same in whole header
         result <- shinydashboard::dashboardSidebar(width = 0,
                                                    collapsed = TRUE,
-                                                   .header_injection(),             #injected header elements
-                                                   .right_sidebar_injection())
+                                                   .header_injection(),
+                                                   .right_sidebar_injection(),
+                                                   .remove_sidebar_toggle())
     } else {
         result <- shinydashboard::dashboardSidebar(
             width = shiny::isolate(.g_opts$sidebar_size),
