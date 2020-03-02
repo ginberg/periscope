@@ -73,7 +73,6 @@ fw_create_sidebar <- function(resetbutton = shiny::isolate(.g_opts$reset_button)
     }
     
     if (is.null(basic[[1]]) && is.null(adv[[1]])) {
-        # TODO remove 'sidebar-toggle' element and make color same in whole header
         result <- shinydashboard::dashboardSidebar(width = 0,
                                                    collapsed = TRUE,
                                                    .header_injection(),
@@ -82,7 +81,7 @@ fw_create_sidebar <- function(resetbutton = shiny::isolate(.g_opts$reset_button)
     } else {
         result <- shinydashboard::dashboardSidebar(
             width = shiny::isolate(.g_opts$sidebar_size),
-            .header_injection(),             #injected header elements
+            .header_injection(),
             .right_sidebar_injection(),
             if (!is.null(basic[[1]]) && !is.null(adv[[1]])) {
                 shiny::div(class = "tab-content",
