@@ -25,12 +25,20 @@ check_sidebar_result <- function(result, basic_existing = FALSE, advanced_existi
     if (length(result$attribs) == 2) {
         expect_equal(result$attribs, list(class = "main-sidebar", 'data-collapsed' = "false"))
     } else {
-        expect_equal(result$attribs, list(id = "sidebarCollapsed", class = "main-sidebar", 'data-collapsed' = "false"))
+        if (basic_existing || advanced_existing) {
+            expect_equal(result$attribs, list(id = "sidebarCollapsed", class = "main-sidebar", 'data-collapsed' = "false"))   
+        } else {
+            expect_equal(result$attribs, list(id = "sidebarCollapsed", class = "main-sidebar", 'data-collapsed' = "true"))   
+        }
     }
 
     result.children <- result$children
     expect_equal(length(result.children), 2)
-    expect_equal(result.children[[1]], NULL) ## ?
+    if (basic_existing || advanced_existing) {
+        expect_equal(result.children[[1]], NULL) ## ?
+    } else {
+        expect_equal(length(result.children[[1]]), 3)
+    }
 
     expect_equal(result.children[[2]]$name, "section")
     expect_equal(result.children[[2]]$attribs$class, "sidebar")

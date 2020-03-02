@@ -72,7 +72,8 @@ fw_create_sidebar <- function(resetbutton = shiny::isolate(.g_opts$reset_button)
         adv[[length(adv) + 1]] <- .appResetButton("appResetId")
     }
     
-    if (is.null(basic[[1]]) && is.null(adv[[1]])) {
+    if ((is.null(basic[[1]]) || length(basic) == 0) &&
+        (is.null(adv[[1]])   || length(adv)   == 0)) {
         result <- shinydashboard::dashboardSidebar(width = 0,
                                                    collapsed = TRUE,
                                                    .header_injection(),
