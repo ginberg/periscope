@@ -30,16 +30,18 @@
 add_ui_sidebar_basic <- function(elementlist = NULL,
                                  append = FALSE,
                                  tabname = "Basic") {
-    if (append) {
-        .g_opts$side_basic <- append(
-            shiny::isolate(.g_opts$side_basic),
-            elementlist)
-    } else {
-        .g_opts$side_basic <- list(
-            shinyBS::bsAlert("sidebarBasicAlert"),
-            elementlist)
+    if (!is.null(elementlist)) {
+        if (append) {
+            .g_opts$side_basic <- append(
+                shiny::isolate(.g_opts$side_basic),
+                elementlist)
+        } else {
+            .g_opts$side_basic <- list(
+                shinyBS::bsAlert("sidebarBasicAlert"),
+                elementlist)
+        }
+        .g_opts$side_basic_label <- tabname
     }
-    .g_opts$side_basic_label <- tabname
     invisible(NULL)
 }
 
@@ -75,17 +77,19 @@ add_ui_sidebar_basic <- function(elementlist = NULL,
 add_ui_sidebar_advanced <- function(elementlist = NULL,
                                     append = FALSE,
                                     tabname = "Advanced") {
-    if (append) {
-        .g_opts$side_advanced <- append(
-            shiny::isolate(.g_opts$side_advanced),
-            elementlist,
-            length(shiny::isolate(.g_opts$side_advanced)) - 1)
-    } else {
-        .g_opts$side_advanced <- list(
-            shinyBS::bsAlert("sidebarAdvancedAlert"),
-            elementlist)
+    if (!is.null(elementlist)) {
+        if (append) {
+            .g_opts$side_advanced <- append(
+                shiny::isolate(.g_opts$side_advanced),
+                elementlist,
+                length(shiny::isolate(.g_opts$side_advanced)) - 1)
+        } else {
+            .g_opts$side_advanced <- list(
+                shinyBS::bsAlert("sidebarAdvancedAlert"),
+                elementlist)
+        }
+        .g_opts$side_advanced_label <- tabname
     }
-    .g_opts$side_advanced_label <- tabname
     invisible(NULL)
 }
 
