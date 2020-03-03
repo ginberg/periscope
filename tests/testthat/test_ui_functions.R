@@ -38,10 +38,14 @@ check_sidebar_result <- function(result, basic_existing = FALSE, advanced_existi
         expect_equal(result.children[[1]], NULL) ## ?
     } else {
         expect_equal(length(result.children[[1]]), 3)
+        expect_equal(result.children[[1]][[1]], "head")
+        expect_equal(class(result.children[[1]][[2]]), "list")
+        expect_equal(class(result.children[[1]][[3]]), "list")
     }
 
     expect_equal(result.children[[2]]$name, "section")
     expect_equal(result.children[[2]]$attribs$class, "sidebar")
+    expect_equal(result.children[[2]][[2]]$id, "sidebarItemExpanded")
 
     result.subchilds <- result.children[[2]]$children[[1]]
     expect_equal(length(result.subchilds), 3)
