@@ -11,6 +11,8 @@
 #   - All variables/functions here are
 #     not available to the UI or Server
 #     scopes - this is isolated
+#   - If no elements are added the 
+#     sidebar will not appear.
 # ----------------------------------------
 
 # -- IMPORTS --

@@ -51,6 +51,7 @@ fw_create_header <- function() {
 
 # Framework UI Header Creation that includes a right sidebar
 fw_create_header_plus <- function(sidebar_right_icon = shiny::isolate(.g_opts$sidebar_right_icon)) {
+    side_right <- shiny::isolate(.g_opts$side_right)
     return(
         shinydashboardPlus::dashboardHeaderPlus(
             title = shiny::div(class = "periscope-busy-ind",
@@ -59,7 +60,7 @@ fw_create_header_plus <- function(sidebar_right_icon = shiny::isolate(.g_opts$si
                                           hspace = "5px",
                                           src = "img/loader.gif") ),
             titleWidth = shiny::isolate(.g_opts$sidebar_size),
-            enable_rightsidebar = TRUE, rightSidebarIcon = sidebar_right_icon)
+            enable_rightsidebar = !is.null(side_right), rightSidebarIcon = sidebar_right_icon)
     )
 }
 

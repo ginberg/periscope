@@ -12,6 +12,9 @@
 #   - All variables/functions here are
 #     not available to the UI or Server
 #     scopes - this is isolated
+#   - If no elements are added to either 
+#     the basic or advanced tab, the 
+#     application sidebar will not appear.
 # ----------------------------------------
 
 # -- IMPORTS --
