@@ -69,8 +69,13 @@ fw_create_sidebar <- function(resetbutton = shiny::isolate(.g_opts$reset_button)
     basic <- shiny::isolate(.g_opts$side_basic)
     adv   <- shiny::isolate(.g_opts$side_advanced)
 
-    if (!is.null(adv) && length(adv) > 0 && resetbutton) {
-        adv[[length(adv) + 1]] <- .appResetButton("appResetId")
+    if (resetbutton) {
+        if (!is.null(adv) && length(adv) > 0) {
+            adv[[length(adv) + 1]] <- .appResetButton("appResetId")
+        } else {
+            adv <- list(shinyBS::bsAlert("sidebarAdvancedAlert"),
+                        .appResetButton("appResetId"))
+        }
     }
     
     if (is.null(basic[[1]]) && is.null(adv[[1]])) {
