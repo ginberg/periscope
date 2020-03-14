@@ -15,6 +15,7 @@
 #' @param resetbutton whether the reset button should be added on the Advanced (left) sidebar.
 #' @param rightsidebar parameter to set the right sidebar. It can be TRUE/FALSE or a character 
 #' containing the name of a shiny::icon().
+#' @param leftsidebar whether the left sidebar should be enabled.
 #'
 #' @section Name:
 #' The \code{name} directory must not exist in \code{location}.  If the code
@@ -106,7 +107,7 @@
 #' create_new_application(name = 'mytestapp', location = tempdir())
 #'
 #' @export
-create_new_application <- function(name, location, sampleapp = FALSE, resetbutton = TRUE, rightsidebar = FALSE) {
+create_new_application <- function(name, location, sampleapp = FALSE, resetbutton = TRUE, rightsidebar = FALSE, leftsidebar = TRUE) {
     usersep <- .Platform$file.sep
     newloc <- paste(location, name, sep = usersep)
 
@@ -132,8 +133,8 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
             }
         }
         .create_dirs(newloc, usersep)
-        .copy_fw_files(newloc, usersep, resetbutton, dashboard_plus, right_sidebar_icon)
-        .copy_program_files(newloc, usersep, sampleapp, resetbutton, dashboard_plus)
+        .copy_fw_files(newloc, usersep, resetbutton, dashboard_plus, leftsidebar, right_sidebar_icon)
+        .copy_program_files(newloc, usersep, sampleapp, resetbutton, leftsidebar, dashboard_plus)
 
         message("Framework creation was successful.")
     }
@@ -164,7 +165,7 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
 }
 
 # Create Framework Files ----------------------------
-.copy_fw_files <- function(newloc, usersep, resetbutton = TRUE, dashboard_plus = FALSE, right_sidebar_icon = NULL) {
+.copy_fw_files <- function(newloc, usersep, resetbutton = TRUE, dashboard_plus = FALSE, leftsidebar = TRUE, right_sidebar_icon = NULL) {
     files <- c("global.R",
                "server.R")
     if (dashboard_plus) {
@@ -188,6 +189,13 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
             close(ui_file)
         }
     }
+    if (!leftsidebar) {
+        ui_file <- file(paste(newloc, "ui.R", sep = usersep), open = "r+")
+        writeLines(gsub("fw_create_sidebar\\(", "fw_create_sidebar\\(showsidebar = FALSE", 
+                        readLines(con = ui_file)), 
+                   con = ui_file)
+        close(ui_file)
+    }
     if (!resetbutton) {
         ui_file <- file(paste(newloc, "ui.R", sep = usersep), open = "r+")
         writeLines(gsub("fw_create_sidebar\\(", "fw_create_sidebar\\(resetbutton = FALSE", 
@@ -210,15 +218,17 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
 }
 
 # Create Program Files ----------------------------
-.copy_program_files <- function(newloc, usersep, sampleapp, resetbutton = TRUE, dashboard_plus = FALSE) {
+.copy_program_files <- function(newloc, usersep, sampleapp, resetbutton = TRUE, leftsidebar = TRUE, dashboard_plus = FALSE) {
     files <- c("global.R",
                "server_global.R",
                "server_local.R",
                "ui_body.R")
-    if (sampleapp && !resetbutton) {
-        files <- c(files, "ui_sidebar_no_reset.R")
-    } else {
-        files <- c(files, "ui_sidebar.R")
+    if (leftsidebar) {
+        if (sampleapp && !resetbutton) {
+            files <- c(files, "ui_sidebar_no_reset.R")
+        } else {
+            files <- c(files, "ui_sidebar.R")
+        }
     }
                
     if (dashboard_plus) {
@@ -243,7 +253,7 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
     if (sampleapp && dashboard_plus) {
         file.rename(paste(targetdir, "server_local_plus.R", sep = usersep), paste(targetdir, "server_local.R", sep = usersep))
     }
-    if (sampleapp && !resetbutton) {
+    if (sampleapp && leftsidebar && !resetbutton) {
         file.rename(paste(targetdir, "ui_sidebar_no_reset.R", sep = usersep), paste(targetdir, "ui_sidebar.R", sep = usersep))
     }
 

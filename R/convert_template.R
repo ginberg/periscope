@@ -4,8 +4,8 @@
 ui_filename                <- "ui.R"
 ui_plus_filename           <- "ui_plus.R"
 ui_right_sidebar_filename  <- "ui_sidebar_right.R"
-reset_button_expression    <- "fw_create_sidebar\\(resetbutton = FALSE\\)"
-no_reset_button_expression <- "fw_create_sidebar\\(\\)"
+reset_button_expression    <- "resetbutton = FALSE"
+no_reset_button_expression <- "fw_create_sidebar\\("
 
 
 # Checks if the location contains a periscope application.

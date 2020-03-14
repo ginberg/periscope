@@ -65,7 +65,7 @@ fw_create_header_plus <- function(sidebar_right_icon = shiny::isolate(.g_opts$si
 }
 
 # Framework UI Left Sidebar Creation
-fw_create_sidebar <- function(resetbutton = shiny::isolate(.g_opts$reset_button)) {
+fw_create_sidebar <- function(showsidebar = shiny::isolate(.g_opts$show_left_sidebar), resetbutton = shiny::isolate(.g_opts$reset_button)) {
     basic <- shiny::isolate(.g_opts$side_basic)
     adv   <- shiny::isolate(.g_opts$side_advanced)
 
@@ -77,14 +77,7 @@ fw_create_sidebar <- function(resetbutton = shiny::isolate(.g_opts$reset_button)
                         .appResetButton("appResetId"))
         }
     }
-    
-    if (is.null(basic[[1]]) && is.null(adv[[1]])) {
-        result <- shinydashboard::dashboardSidebar(width = 0,
-                                                   collapsed = TRUE,
-                                                   .header_injection(),
-                                                   .right_sidebar_injection(),
-                                                   .remove_sidebar_toggle())
-    } else {
+    if (showsidebar) {
         result <- shinydashboard::dashboardSidebar(
             width = shiny::isolate(.g_opts$sidebar_size),
             .header_injection(),
@@ -110,6 +103,12 @@ fw_create_sidebar <- function(resetbutton = shiny::isolate(.g_opts$reset_button)
                            adv)
             }
         )
+    } else {
+        result <- shinydashboard::dashboardSidebar(width = 0,
+                                                   collapsed = TRUE,
+                                                   .header_injection(),
+                                                   .right_sidebar_injection(),
+                                                   .remove_sidebar_toggle())
     }
     result
 }

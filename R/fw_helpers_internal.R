@@ -23,6 +23,7 @@
     reset_wait          = 5000,  #milliseconds
     show_userlog        = TRUE,
     body_elements       = c(),
+    show_left_sidebar   = TRUE,
     side_basic          = .g_sidebar_default_value,
     side_basic_label    = "Basic",
     side_advanced       = .g_sidebar_default_value,
