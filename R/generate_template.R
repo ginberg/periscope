@@ -189,18 +189,28 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
             close(ui_file)
         }
     }
-    if (!leftsidebar) {
-        ui_file <- file(paste(newloc, "ui.R", sep = usersep), open = "r+")
-        writeLines(gsub("fw_create_sidebar\\(", "fw_create_sidebar\\(showsidebar = FALSE", 
-                        readLines(con = ui_file)), 
-                   con = ui_file)
+    if (leftsidebar) {
+        if (!resetbutton) {
+            ui_file <- file(paste(newloc, "ui.R", sep = usersep), open = "r+")
+            writeLines(gsub("fw_create_sidebar\\(", "fw_create_sidebar\\(resetbutton = FALSE", 
+                            readLines(con = ui_file)), 
+                       con = ui_file)
+            close(ui_file)
+        }
+    } else {
+        ui_file    <- file(paste(newloc, "ui.R", sep = usersep), open = "r")
+        ui_content <- readLines(con = ui_file)
         close(ui_file)
-    }
-    if (!resetbutton) {
-        ui_file <- file(paste(newloc, "ui.R", sep = usersep), open = "r+")
-        writeLines(gsub("fw_create_sidebar\\(", "fw_create_sidebar\\(resetbutton = FALSE", 
-                        readLines(con = ui_file)), 
-                   con = ui_file)
+        source_positions <- grep("source", ui_content)
+        remove_positions <- seq(source_positions[1], source_positions[2] - 1)
+        ui_content       <- ui_content[-remove_positions]
+        if (resetbutton) {
+            ui_content <- gsub("fw_create_sidebar\\(\\)", "fw_create_sidebar\\(showsidebar = FALSE\\)", ui_content)
+        } else {
+            ui_content <- gsub("fw_create_sidebar\\(\\)", "fw_create_sidebar\\(showsidebar = FALSE, resetbutton = FALSE\\)", ui_content)
+        }
+        ui_file    <- file(paste(newloc, "ui.R", sep = usersep), open = "w")
+        writeLines(ui_content, con = ui_file)
         close(ui_file)
     }
 
