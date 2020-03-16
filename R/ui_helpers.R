@@ -119,14 +119,12 @@ add_ui_sidebar_advanced <- function(elementlist = NULL,
 #' 
 #' @export
 add_ui_sidebar_right <- function(elementlist = NULL, append = FALSE) {
-    if (!is.null(elementlist)) {
-        if (append) {
-            .g_opts$side_right <- append(
-                shiny::isolate(.g_opts$side_right),
-                elementlist)
-        } else {
-            .g_opts$side_right <- elementlist
-        }
+    if (append) {
+        .g_opts$side_right <- append(
+            shiny::isolate(.g_opts$side_right),
+            elementlist)
+    } else {
+        .g_opts$side_right <- elementlist
     }
     invisible(NULL)
 }
