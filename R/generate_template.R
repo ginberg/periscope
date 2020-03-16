@@ -229,42 +229,39 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
 
 # Create Program Files ----------------------------
 .copy_program_files <- function(newloc, usersep, sampleapp, resetbutton = TRUE, leftsidebar = TRUE, dashboard_plus = FALSE) {
-    files <- c("global.R",
-               "server_global.R",
-               "server_local.R",
-               "ui_body.R")
-    if (leftsidebar) {
-        if (sampleapp && !resetbutton) {
-            files <- c(files, "ui_sidebar_no_reset.R")
-        } else {
-            files <- c(files, "ui_sidebar.R")
-        }
-    }
-               
+    files <- list("global.R"        = "global.R",
+                  "server_global.R" = "server_global.R",
+                  "server_local.R"  = "server_local.R",
+                  "ui_sidebar.R"    = "ui_sidebar.R",
+                  "ui_body.R"       = "ui_body.R")
+    
     if (dashboard_plus) {
-        files <- c(files, "ui_sidebar_right.R")
-        if (sampleapp) {
-            files <- c(files, "server_local_plus.R")
-        }
-    } else {
-        files <- c(files, "server_local.R")
+        files["ui_sidebar_right.R"] <- "ui_sidebar_right.R"
     }
-
+    if (sampleapp) {
+        if (dashboard_plus) {
+            if (leftsidebar) {
+                names(files)[grepl("server_local.R", names(files))] <- "server_local_plus.R"
+            } else {
+                names(files)[grepl("server_local.R", names(files))] <- "server_local_plus_no_left.R"
+            }
+        } else if (!dashboard_plus && !leftsidebar) {
+            names(files)[grepl("server_local.R", names(files))] <- "server_local_no_left.R"
+        }
+        if (leftsidebar && !resetbutton) {
+            names(files)[grepl("ui_sidebar.R", names(files))] <- "ui_sidebar_no_reset.R"
+        }
+    }
+    
     targetdir <- paste(newloc, "program", sep = usersep)
     sourcedir <- paste("fw_templ",
                        ifelse(sampleapp, "p_example", "p_blank"),
                        sep = usersep)
 
-    for (file in files) {
+    for (file in names(files)) {
         writeLines(readLines(
             con = system.file(sourcedir, file, package = "periscope")),
-            con = paste(targetdir, file, sep = usersep))
-    }
-    if (sampleapp && dashboard_plus) {
-        file.rename(paste(targetdir, "server_local_plus.R", sep = usersep), paste(targetdir, "server_local.R", sep = usersep))
-    }
-    if (sampleapp && leftsidebar && !resetbutton) {
-        file.rename(paste(targetdir, "ui_sidebar_no_reset.R", sep = usersep), paste(targetdir, "ui_sidebar.R", sep = usersep))
+            con = paste(targetdir, files[[file]], sep = usersep))
     }
 
     #subdir copies for sampleapp
