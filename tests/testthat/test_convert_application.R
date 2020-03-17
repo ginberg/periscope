@@ -1,7 +1,7 @@
 context("periscope convert existing application")
 
 
-expect_converted_application <- function(location, right_sidebar = NULL, reset_button = NULL) {
+expect_converted_application <- function(location, right_sidebar = NULL, reset_button = NULL, left_sidebar = NULL, cleanup = TRUE) {
     expect_true(dir.exists(location))
     expect_true(file.exists(file.path(location, "global.R")))
     expect_true(file.exists(file.path(location, "server.R")))
@@ -27,8 +27,18 @@ expect_converted_application <- function(location, right_sidebar = NULL, reset_b
             expect_true(any(grepl("resetbutton", ui_content)))   
         }
     }
+    if (!is.null(left_sidebar)) {
+        if (left_sidebar) {
+            expect_true(file.exists(file.path(location, "program", "ui_sidebar.R")))
+        } else {
+            expect_true(!file.exists(file.path(location, "program", "ui_sidebar.R")))   
+        }
+        
+    }
     # clean up
-    unlink(location, TRUE)
+    if (cleanup) {
+        unlink(location, TRUE)
+    }
 }
 
 # creates a temp directory, copies the sample_app to this directory and returns the path of the temp app
@@ -39,6 +49,45 @@ create_app_tmp_dir <- function() {
     file.path(app_temp.dir, app_name)
 }
 
+## left_sidebar tests 
+
+test_that("add_left_sidebar null location", {
+    expect_warning(add_left_sidebar(location = NULL),
+                   "Add left sidebar conversion could not proceed, location cannot be empty!")
+})
+
+test_that("add_left_sidebar empty location", {
+    expect_warning(add_left_sidebar(location = ""),
+                   "Add left sidebar conversion could not proceed, location cannot be empty!")
+})
+
+test_that("add_left_sidebar invalid location", {
+    expect_warning(add_left_sidebar(location = "invalid"),
+                   "Add left sidebar conversion could not proceed, location=<invalid> does not exist!")
+})
+
+test_that("add_left_sidebar location does not contain an existing application", {
+    expect_warning(add_left_sidebar(location = "../testthat"),
+                   "Add left sidebar conversion could not proceed, location=<../testthat> does not contain a valid periscope application!")
+})
+
+test_that("add_left_sidebar valid location", {
+    app_location <- create_app_tmp_dir()
+    
+    expect_message(remove_left_sidebar(location = app_location), "Remove left sidebar conversion was successful. File\\(s\\) updated: ui.R, ui_sidebar.R")
+    expect_converted_application(location = app_location, left_sidebar = FALSE, cleanup = FALSE)
+    expect_message(add_left_sidebar(location = app_location), "Add left sidebar conversion was successful. File\\(s\\) updated: ui.R")
+    expect_converted_application(location = app_location, left_sidebar = TRUE)
+})
+
+test_that("add_left_sidebar valid location, added twice", {
+    app_location <- create_app_tmp_dir()
+    
+    expect_message(remove_left_sidebar(location = app_location), "Remove left sidebar conversion was successful. File\\(s\\) updated: ui.R, ui_sidebar.R")
+    expect_message(add_left_sidebar(location = app_location), "Add left sidebar conversion was successful. File\\(s\\) updated: ui.R")
+    expect_message(add_left_sidebar(location = app_location), "Left sidebar already available, no conversion needed")
+    expect_converted_application(location = app_location, left_sidebar = TRUE)
+})
 
 ## add_right_sidebar tests 
 

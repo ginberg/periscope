@@ -23,6 +23,8 @@ expect_cleanup_create_new_application <- function(fullname, sampleapp = FALSE, d
 
     if (leftsidebar) {
         expect_true(file.exists(paste0(fullname, "/program/ui_sidebar.R")))
+    } else {
+        expect_true(!file.exists(paste0(fullname, "/program/ui_sidebar.R")))
     }
     
     if (sampleapp) {

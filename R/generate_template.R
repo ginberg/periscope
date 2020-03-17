@@ -232,9 +232,11 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
     files <- list("global.R"        = "global.R",
                   "server_global.R" = "server_global.R",
                   "server_local.R"  = "server_local.R",
-                  "ui_sidebar.R"    = "ui_sidebar.R",
                   "ui_body.R"       = "ui_body.R")
     
+    if (leftsidebar) {
+        files["ui_sidebar.R"] <- "ui_sidebar.R"
+    }
     if (dashboard_plus) {
         files["ui_sidebar_right.R"] <- "ui_sidebar_right.R"
     }
