@@ -104,7 +104,9 @@
 #' rightsidebar = "table")
 #' 
 #' # blank app named 'myblankapp' created in a temp dir
-#' create_new_application(name = 'mytestapp', location = tempdir())
+#' create_new_application(name = 'myblankapp', location = tempdir())
+#' # blank app named 'myblankapp' without a left sidebar created in a temp dir
+#' create_new_application(name = 'myblankapp', location = tempdir(), leftsidebar = FALSE)
 #'
 #' @export
 create_new_application <- function(name, location, sampleapp = FALSE, resetbutton = TRUE, rightsidebar = FALSE, leftsidebar = TRUE) {

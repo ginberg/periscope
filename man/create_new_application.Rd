@@ -128,7 +128,9 @@ create_new_application(name = 'mytestapp', location = tempdir(), sampleapp = TRU
 rightsidebar = "table")
 
 # blank app named 'myblankapp' created in a temp dir
-create_new_application(name = 'mytestapp', location = tempdir())
+create_new_application(name = 'myblankapp', location = tempdir())
+# blank app named 'myblankapp' without a left sidebar created in a temp dir
+create_new_application(name = 'myblankapp', location = tempdir(), leftsidebar = FALSE)
 
 }
 \seealso{
