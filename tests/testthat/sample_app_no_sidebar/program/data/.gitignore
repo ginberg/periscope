@@ -1,7 +1,4 @@
 *
 */
 !.gitignore
-<<<<<<< HEAD
-=======
 !example.csv
->>>>>>> upstream/cran
