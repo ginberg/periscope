@@ -22,7 +22,6 @@ shinyServer(function(input, output, session) {
 
     periscope:::fw_server_setup(input, output, session, ss_userAction.Log)
 
-    loginfo("%s started with log level <%s>",
-            periscope:::fw_get_title(), periscope:::fw_get_loglevel(),
-            logger = ss_userAction.Log)
+    info(paste(periscope:::fw_get_title(), "started with log level", 
+               periscope:::fw_get_loglevel()), logger = ss_userAction.Log)
 })

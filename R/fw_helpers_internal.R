@@ -10,6 +10,8 @@
     tt_height          = "16px",
     tt_width           = "16px",
     datetime.fmt       = "%m-%d-%Y %H:%M",
+    log.dir            = "log",
+    log.name           = "actions",
     log.formatter      = function(record) { paste0(record$logger,
                                                    " [", record$timestamp, "] ",
                                                    record$msg) },
@@ -206,15 +208,17 @@
 
 # Server ----------------------------
 
+.get_log_file_name <- function(logdir) {
+    logfile   <- paste0(paste(logdir, shiny::isolate(.g_opts$log.name), sep = .Platform$file.sep),
+                        ".log")
+    return(logfile)
+}
 # Sets up the logging functionality including archiving out any existing log
 # and attaching the file handler.  DEBUG will also attach a console handler.
 # NOTE: only one previous log is kept (as <name>.loglast)
 .setupUserLogging <- function(logger) {
-    logdir    <- "log"
-    logfile   <- paste0(paste(logdir, logger$name, sep = .Platform$file.sep),
-                        ".log")
-    formatter <- .g_opts$log.formatter
-    loglevel  <- .g_opts$loglevel
+    logdir    <- shiny::isolate(.g_opts$log.dir)
+    logfile   <- .get_log_file_name(logdir)
 
     if (!dir.exists(logdir)) {
         dir.create(logdir)
@@ -226,19 +230,6 @@
     }
 
     file.create(logfile)
-
-    logging::addHandler(logging::writeToFile,
-                        file = logfile,
-                        level = loglevel,
-                        logger = logger,
-                        formatter = formatter)
-
-    if (loglevel == "DEBUG") {
-        logging::addHandler(logging::writeToConsole,
-                            level = loglevel,
-                            logger = logger,
-                            formatter = formatter)
-    }
 
     return(logfile)
 }

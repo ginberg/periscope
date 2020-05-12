@@ -155,8 +155,8 @@ output$examplePlot1  <- renderCanvasXpress({
     plot_htmlwidget()
 })
 
-loginfo("Be Sure to Remember to Log ALL user actions",
-        logger = ss_userAction.Log)
+info("Be Sure to Remember to Log ALL user actions",
+     logger = ss_userAction.Log)
 
 # -- Setup Download Modules with Functions we want called
 callModule(downloadFile, "exampleDownload1", ss_userAction.Log,
@@ -189,16 +189,16 @@ callModule(downloadablePlot, "examplePlot3", ss_userAction.Log,
 
 # -- Observe UI Changes
 observeEvent(input$exampleBasicAlert, {
-    loginfo("Sidebar Basic Alert Button Pushed",
-            logger = ss_userAction.Log)
+    info("Sidebar Basic Alert Button Pushed",
+         logger = ss_userAction.Log)
     createAlert(session, "sidebarBasicAlert",
                 style = "success",
                 content = "Example Basic Sidebar Alert")
 })
 
 observeEvent(input$exampleAdvancedAlert, {
-    loginfo("Sidebar Advanced Alert Example Button Pushed",
-            logger = ss_userAction.Log)
+    info("Sidebar Advanced Alert Example Button Pushed",
+         logger = ss_userAction.Log)
     createAlert(session, "sidebarAdvancedAlert",
                 style = "warning",
                 content = "Example Advanced Sidebar Alert")
@@ -206,15 +206,15 @@ observeEvent(input$exampleAdvancedAlert, {
 })
 
 observeEvent(input$exampleBodyAlert, {
-    loginfo("Body Alert Example Button Pushed",
-            logger = ss_userAction.Log)
+    info("Body Alert Example Button Pushed",
+         logger = ss_userAction.Log)
     createAlert(session, "bodyAlert", style = "info", append = FALSE,
                 content = paste("Example Body Alert - Append set to FALSE,",
                                 "so only one alert will show"))
 })
 
 observeEvent(input$showWorking, {
-    loginfo("Show Busy Indicator Button Pushed",
-            logger = ss_userAction.Log)
+    info("Show Busy Indicator Button Pushed",
+         logger = ss_userAction.Log)
     Sys.sleep(5)
 })

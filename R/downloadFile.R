@@ -230,18 +230,18 @@ downloadFile <- function(input, output, session, logger,
             }
             else {
                 msg <- paste(type, "could not be processed")
-                logging::logwarn(msg)
+                log4r::warn(msg, logger = logger)
                 warning(msg)
             }
         }
         # error - type not handled
         else {
             msg <- paste(type, "not implemented as a download type")
-            logging::logwarn(msg)
+            log4r::warn(msg, logger = logger)
             warning(msg)
         }
-        logging::loginfo(paste("File downloaded in browser: <",
-                               filename(), ">"), logger = logger)
+        log4r::info(paste("File downloaded in browser: <",
+                          filename(), ">"), logger = logger)
     }
 
     # --- IMAGE processing
@@ -290,7 +290,7 @@ downloadFile <- function(input, output, session, logger,
             else {
                 msg <- paste("Unsupported plot type for ggplot download - ",
                              "must be in: <png, jpeg, tiff, bmp>")
-                logging::logwarn(msg)
+                log4r::warn(msg, logger = logger)
                 warning(msg)
             }
         }
@@ -308,7 +308,7 @@ downloadFile <- function(input, output, session, logger,
             else {
                 msg <- paste("Unsupported plot type for lattice download - ",
                              "must be in: <png, jpeg, tiff, bmp>")
-                logging::logwarn(msg)
+                log4r::warn(msg, logger = logger)
                 warning(msg)
             }
         }
@@ -316,11 +316,11 @@ downloadFile <- function(input, output, session, logger,
         # ------- should really never be hit
         else {
             msg <- paste(type, "not implemented as a download type")
-            logging::logwarn(msg)
+            log4r::warn(msg, logger = logger)
             warning(msg)
         }
-        logging::loginfo(paste("File downloaded in browser: <",
-                               filename(), ">"), logger = logger)
+        log4r::info(paste("File downloaded in browser: <",
+                          filename(), ">"), logger = logger)
     }
 }
 

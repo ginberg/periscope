@@ -33,7 +33,15 @@ fw_get_version <- function() {
 
 # Get User Action Log
 fw_get_user_log <- function() {
-    logging::getLogger(name = "actions")
+    logdir    <- shiny::isolate(.g_opts$log.dir)
+    loglevel  <- shiny::isolate(.g_opts$loglevel)
+    
+    if (loglevel == "DEBUG") {
+        log4r::logger(appenders = list(log4r::file_appender(file = .get_log_file_name(logdir)),
+                                       log4r::console_appender()))
+    } else {
+        log4r::logger(appenders = list(log4r::file_appender(file = .get_log_file_name(logdir))))
+    }
 }
 
 # Framework UI Header Creation

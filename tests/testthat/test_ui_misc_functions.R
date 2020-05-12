@@ -29,7 +29,7 @@ test_that("fw_get_version", {
 
 test_that("fw_get_user_log", {
     result <- periscope:::fw_get_user_log()
-    expect_equal(class(result)[1], "Logger")
+    expect_equal(class(result)[1], "logger")
 })
 
 test_that("setup_logging", {
