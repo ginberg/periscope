@@ -121,14 +121,14 @@ output$loginfo <- renderUI({
            "is the standardized footer added by the framework.",
            "To create actions to the framework call one of the logging ",
            "functions like: ",
-           pre('logXXXX("Your Log Message with %s, %s parameters", parm1, parm2, logger = ss_userAction.Log)')),
+           pre('XXXX(paste("Your Log Message with", parm1, ",", parm2, "parameters"), logger = ss_userAction.Log)')),
          p("The XXXX should be replaced by an actual log level like 'info', 'debug', 'warn' or 'error'.
             The framework will handle updating the footer UI element every ",
            "time the log is added to.  It is important to note that the log ",
            "rolls over for each session.  The log files are kept in the ",
            "/log directory and named 'actions.log'.  ONE old copy of ",
            "the log is kept as 'actions.log.last"),
-         p("See the ", em("logging"), "documentation for more information ",
+         p("See the ", em("log4r"), "documentation for more information ",
            "on functions and other options") )
     })
 

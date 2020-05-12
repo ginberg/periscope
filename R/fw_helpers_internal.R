@@ -216,9 +216,9 @@
 # Sets up the logging functionality including archiving out any existing log
 # and attaching the file handler.  DEBUG will also attach a console handler.
 # NOTE: only one previous log is kept (as <name>.loglast)
-.setupUserLogging <- function(logger) {
-    logdir    <- shiny::isolate(.g_opts$log.dir)
-    logfile   <- .get_log_file_name(logdir)
+.setupUserLogging <- function() {
+    logdir  <- shiny::isolate(.g_opts$log.dir)
+    logfile <- .get_log_file_name(logdir)
 
     if (!dir.exists(logdir)) {
         dir.create(logdir)
@@ -235,11 +235,11 @@
 }
 
 
-.setup_logging <- function(session, logger) {
+.setup_logging <- function(session) {
     return(
         shiny::reactiveFileReader(
             500, #milliseconds,
             session,
-            .setupUserLogging(logger),
+            .get_log_file_name(shiny::isolate(.g_opts$log.dir)),
             readLines) )
 }

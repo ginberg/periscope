@@ -33,15 +33,14 @@ test_that("fw_get_user_log", {
 })
 
 test_that("setup_logging", {
-    result <- shiny::isolate(.setup_logging(NULL, periscope:::fw_get_user_log()))
+    result <- shiny::isolate(.setup_logging(NULL))
     expect_equal(class(result), c("reactiveExpr", "reactive"))
 })
 
 test_that("setup_logging existing log", {
     logger <- periscope:::fw_get_user_log()
-    file.create(paste0(paste(log_directory, logger$name, sep = .Platform$file.sep), ".log"))
 
-    result <- shiny::isolate(.setup_logging(NULL,logger))
+    result <- shiny::isolate(.setup_logging(NULL))
     expect_equal(class(result), c("reactiveExpr", "reactive"))
 })
 

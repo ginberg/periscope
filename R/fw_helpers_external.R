@@ -4,7 +4,7 @@
 
 # Framework Server Setup
 fw_server_setup <- function(input, output, session, logger) {
-    logfile <- shiny::isolate(.setup_logging(session, logger))
+    logfile <- shiny::isolate(.setup_logging(session))
     shiny::callModule(.bodyFooter, "footerId",   logfile)
     if (shiny::isolate(.g_opts$reset_button)) {
         shiny::callModule(.appReset, "appResetId", logger)
@@ -33,14 +33,14 @@ fw_get_version <- function() {
 
 # Get User Action Log
 fw_get_user_log <- function() {
-    logdir    <- shiny::isolate(.g_opts$log.dir)
-    loglevel  <- shiny::isolate(.g_opts$loglevel)
+    loglevel <- shiny::isolate(.g_opts$loglevel)
+    logfile  <- .setupUserLogging()
     
     if (loglevel == "DEBUG") {
-        log4r::logger(appenders = list(log4r::file_appender(file = .get_log_file_name(logdir)),
+        log4r::logger(appenders = list(log4r::file_appender(file = logfile),
                                        log4r::console_appender()))
     } else {
-        log4r::logger(appenders = list(log4r::file_appender(file = .get_log_file_name(logdir))))
+        log4r::logger(appenders = list(log4r::file_appender(file = logfile)))
     }
 }
 
