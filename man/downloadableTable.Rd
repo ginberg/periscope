@@ -25,7 +25,7 @@ downloadableTable(
 \item{session}{provided by \code{shiny::callModule}
 \cr \cr}
 
-\item{logger}{\link[logging:logging-package]{logging} logger to use}
+\item{logger}{\link[log4r:log4r-package]{log4r} logger to use}
 
 \item{filenameroot}{the base text used for user-downloaded file - can be
 either a character string or a reactive expression returning a character
@@ -93,5 +93,5 @@ currently selected rows in the display table.
 
 \link[shiny]{callModule}
 
-\link[logging:logging-package]{logging}
+\link[log4r:log4r-package]{log4r}
 }

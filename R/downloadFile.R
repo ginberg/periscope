@@ -108,7 +108,7 @@ downloadFileButton <- function(id,
 #' @param output provided by \code{shiny::callModule}
 #' @param session provided by \code{shiny::callModule}
 #' \cr \cr
-#' @param logger \link[logging:logging-package]{logging} logger to use
+#' @param logger \link[log4r:log4r-package]{log4r} logger to use
 #' @param filenameroot the base text used for user-downloaded file - can be
 #' either a character string or a reactive expression that returns a character
 #' string
@@ -129,7 +129,7 @@ downloadFileButton <- function(id,
 #' @seealso \link[periscope]{downloadFile_ValidateTypes}
 #' @seealso \link[periscope]{downloadFile_AvailableTypes}
 #' @seealso \link[shiny]{callModule}
-#' @seealso \link[logging:logging-package]{logging}
+#' @seealso \link[log4r:log4r-package]{log4r}
 #'
 #' @examples 
 #' # Inside server_local.R

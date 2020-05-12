@@ -227,7 +227,7 @@ ui_tooltip <- function(id, label = "", text = "") {
 #' Call this function from \code{program/global.R} to set the application
 #' parameters.
 #'
-#' @seealso \link[logging:logging-package]{logging}
+#' @seealso \link[log4r:log4r-package]{log4r}
 #' 
 #' @export
 set_app_parameters <- function(title, titleinfo = NULL,

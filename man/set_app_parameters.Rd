@@ -47,5 +47,5 @@ parameters.
 }
 
 \seealso{
-\link[logging:logging-package]{logging}
+\link[log4r:log4r-package]{log4r}
 }
