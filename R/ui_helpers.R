@@ -264,3 +264,22 @@ get_url_parameters <- function(session) {
 
     return(parameters)
 }
+
+#' loginfo
+#'
+#' @param msg the textual message to be output, or the format for the \dots
+#'  arguments
+#' @param ... if present, msg is interpreted as a format and the \dots values
+#'  are passed to it to form the actual message.
+#' @param logger the name of the logger to which we pass the record
+#'
+#' @export
+loginfo <- function(msg, ..., logger) {
+    params  <- list(...)
+    if (length(params) > 0) {
+        msg <- do.call(sprintf, c(msg, params))  
+    }
+    log4r::info(msg, logger = logger)
+    
+    invisible(NULL)
+}

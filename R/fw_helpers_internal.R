@@ -6,15 +6,12 @@
 # .g_opts --------------------
 # holds the app options values
 .g_opts <- shiny::reactiveValues(
-    tt_image           = "img/tooltip.png",
-    tt_height          = "16px",
-    tt_width           = "16px",
-    datetime.fmt       = "%m-%d-%Y %H:%M",
-    log.dir            = "log",
-    log.name           = "actions",
-    log.formatter      = function(record) { paste0(record$logger,
-                                                   " [", record$timestamp, "] ",
-                                                   record$msg) },
+    tt_image            = "img/tooltip.png",
+    tt_height           = "16px",
+    tt_width            = "16px",
+    datetime.fmt        = "%m-%d-%Y %H:%M",
+    log.dir             = "log",
+    log.name            = "actions",
     loglevel            = "DEBUG",
     app_title           = "Set using set_app_parameters() in program/global.R",
     app_info            = NULL,
