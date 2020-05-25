@@ -237,49 +237,50 @@ Logger <- setRefClass(
 NULL
 
 #' @rdname logging-entrypoints
-#'
+#' 
+#' @export
 logdebug <- function(msg, ..., logger = "") {
     .levellog(loglevels["DEBUG"], msg, ..., logger = logger)
 }
 
 #' @rdname logging-entrypoints
 #' 
-#'
+#' @export
 logfinest <- function(msg, ..., logger = "") {
     .levellog(loglevels["FINEST"], msg, ..., logger = logger)
 }
 
 #' @rdname logging-entrypoints
-#' 
-#'
+#'  
+#' @export
 logfiner <- function(msg, ..., logger = "") {
     .levellog(loglevels["FINER"], msg, ..., logger = logger)
 }
 
 #' @rdname logging-entrypoints
 #' 
-#'
+#' @export
 logfine <- function(msg, ..., logger = "") {
     .levellog(loglevels["FINE"], msg, ..., logger = logger)
 }
 
 #' @rdname logging-entrypoints
 #' 
-#'
+#' @export
 loginfo <- function(msg, ..., logger = "") {
     .levellog(loglevels["INFO"], msg, ..., logger = logger)
 }
 
 #' @rdname logging-entrypoints
 #' 
-#'
+#' @export
 logwarn <- function(msg, ..., logger = "") {
     .levellog(loglevels["WARN"], msg, ..., logger = logger)
 }
 
 #' @rdname logging-entrypoints
 #' 
-#'
+#' @export
 logerror <- function(msg, ..., logger = "") {
     .levellog(loglevels["ERROR"], msg, ..., logger = logger)
 }
