@@ -232,12 +232,6 @@ Logger <- setRefClass(
 #'  are passed to it to form the actual message.
 #' @param logger the name of the logger to which we pass the record
 #'
-#' @examples
-#' logReset()
-#' addHandler(writeToConsole)
-#' loginfo('this goes to console')
-#' logdebug('this stays silent')
-#'
 #' @name logging-entrypoints
 #'
 NULL
@@ -316,20 +310,12 @@ levellog <- function(level, msg, ..., logger = "") {
 #' Make sure a logger with a specific name exists and return it as a
 #' \var{Logger} S4 object.  if not yet present, the logger will be created and
 #' given the values specified in the \dots arguments.
-#'
+#' @importFrom methods new
 #' @param name The name of the logger
 #' @param ... Any properties you may want to set in the newly created
 #'    logger. These have no effect if the logger is already present.
 #'
 #' @return The logger retrieved or registered.
-#'
-#' @examples
-#' getLogger()  # returns the root logger
-#' getLogger('test.sub')  # constructs a new logger and returns it
-#' getLogger('test.sub')  # returns it again
-#'
-#' 
-#'
 getLogger <- function(name = "", ...) {
     if (name == "") {
         fullname <- "logging.ROOT"
@@ -359,13 +345,6 @@ getLogger <- function(name = "", ...) {
 #' \code{basicConfig} and \code{logReset} provide a way to put the logging package
 #' in a know initial state.
 #'
-#' @examples
-#' basicConfig()
-#' logdebug("not shown, basic is INFO")
-#' logwarn("shown and timestamped")
-#' logReset()
-#' logwarn("not shown, as no handlers are present after a reset")
-#'
 #' @name bootstrapping
 NULL
 
@@ -383,7 +362,6 @@ NULL
 #'   this has no effect on the handling level of the handler that basicConfig attaches to the
 #'   root logger.
 #'
-#' 
 #'
 basicConfig <- function(level = 20) {
     root_logger <- getLogger()
@@ -454,14 +432,6 @@ logReset <- function() {
 #' @param logger the name of the logger to which to attach the new handler,
 #'   defaults to the root logger.
 #'
-#' @examples
-#' logReset()
-#' addHandler(writeToConsole)
-#' names(getLogger()[["handlers"]])
-#' loginfo("test")
-#' removeHandler("writeToConsole")
-#' logwarn("test")
-#'
 #' @name handlers-management
 NULL
 
@@ -519,12 +489,6 @@ removeHandler <- function(handler, logger = "") {
 #' @param logger Optional: the name of the logger. Defaults to the root logger.
 #'
 #' @return The retrieved handler object. It returns NULL if handler is not registerd.
-#'
-#' @examples
-#' logReset()
-#' addHandler(writeToConsole)
-#' getHandler("basic.stdout")
-#'
 #' 
 #'
 getHandler <- function(handler, logger = "") {
@@ -550,13 +514,6 @@ getHandler <- function(handler, logger = "") {
 #' @param level The new level for this object. Can be numeric or character.
 #' @param container a logger, its name or a handler. Default is root logger.
 #'
-#' @examples
-#' basicConfig()
-#' setLevel("FINEST")
-#' setLevel("DEBUG", getHandler("basic.stdout"))
-#'
-#' 
-#'
 setLevel <- function(level, container = "") {
     if (is.null(container)) {
         stop("NULL container provided: cannot set level for NULL container")
@@ -580,14 +537,6 @@ setLevel <- function(level, container = "") {
 #'
 #' @param composer_f message composer function (type: function(msg, ...))
 #' @param container name of logger to reser message composer for (type: character)
-#'
-#' @examples
-#' setMsgComposer(function(msg, ...) paste0("s-", msg, "-e"))
-#' loginfo("a message") # will log '<TS> INFO::s-a message-e'
-#' resetMsgComposer()
-#' loginfo("a message") # will log '<TS> INFO::a message'
-#'
-#' 
 #'
 setMsgComposer <- function(composer_f, container = "") {
     if (is.null(container)) {
