@@ -26,7 +26,6 @@ Imports:
     shinydashboard (>= 0.5),
     shinydashboardPlus (>= 0.5),
     shinyBS (>= 0.61),
-    logging (>= 0.7-103),
     lubridate (>= 1.6),
     DT (>= 0.2),
     openxlsx (>= 3.0),

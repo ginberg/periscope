@@ -44,3 +44,6 @@ NULL
 .onLoad <- function(libname, pkgname) {
     #TBD
 }
+
+## create the logging environment
+logging.options <- new.env()
