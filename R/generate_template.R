@@ -16,6 +16,7 @@
 #' @param rightsidebar parameter to set the right sidebar. It can be TRUE/FALSE or a character 
 #' containing the name of a shiny::icon().
 #' @param leftsidebar whether the left sidebar should be enabled.
+#' @param style list containing application styling properties. By default the skin is blue.
 #'
 #' @section Name:
 #' The \code{name} directory must not exist in \code{location}.  If the code
@@ -94,6 +95,7 @@
 #'  }
 #'
 #'@seealso \link[shiny:icon]{shiny:icon()}
+#'@seealso \link[shinydashboard:dashboardPage]{shinydashboard:dashboardPage()}
 #'
 #'@examples
 #' # sample app named 'mytestapp' created in a temp dir
@@ -105,11 +107,13 @@
 #' 
 #' # blank app named 'myblankapp' created in a temp dir
 #' create_new_application(name = 'myblankapp', location = tempdir())
+#' #' # blank app named 'myblankapp' with a green skin created in a temp dir
+#' create_new_application(name = 'myblankapp', location = tempdir(), style = (skin = "green"))
 #' # blank app named 'myblankapp' without a left sidebar created in a temp dir
 #' create_new_application(name = 'myblankapp', location = tempdir(), leftsidebar = FALSE)
 #'
 #' @export
-create_new_application <- function(name, location, sampleapp = FALSE, resetbutton = TRUE, rightsidebar = FALSE, leftsidebar = TRUE) {
+create_new_application <- function(name, location, sampleapp = FALSE, resetbutton = TRUE, rightsidebar = FALSE, leftsidebar = TRUE, style = list(skin = "blue")) {
     usersep <- .Platform$file.sep
     newloc <- paste(location, name, sep = usersep)
 
@@ -135,7 +139,7 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
             }
         }
         .create_dirs(newloc, usersep)
-        .copy_fw_files(newloc, usersep, resetbutton, dashboard_plus, leftsidebar, right_sidebar_icon)
+        .copy_fw_files(newloc, usersep, resetbutton, dashboard_plus, leftsidebar, right_sidebar_icon, style)
         .copy_program_files(newloc, usersep, sampleapp, resetbutton, leftsidebar, dashboard_plus)
 
         message("Framework creation was successful.")
@@ -167,7 +171,7 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
 }
 
 # Create Framework Files ----------------------------
-.copy_fw_files <- function(newloc, usersep, resetbutton = TRUE, dashboard_plus = FALSE, leftsidebar = TRUE, right_sidebar_icon = NULL) {
+.copy_fw_files <- function(newloc, usersep, resetbutton = TRUE, dashboard_plus = FALSE, leftsidebar = TRUE, right_sidebar_icon = NULL, style = list(skin = "blue")) {
     files <- c("global.R",
                "server.R")
     if (dashboard_plus) {
@@ -215,6 +219,21 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
         writeLines(ui_content, con = ui_file)
         close(ui_file)
     }
+    # styling
+    if (!is.null(style) && identical(class(style), "list") && length(style) > 0 &&
+        !identical(intersect("skin", names(style)), character(0)) && !identical(style, list(skin = "blue"))) {
+        skin_value  <- style$skin
+        ui_file     <- file(paste(newloc, "ui.R", sep = usersep), open = "r+")
+        ui_content  <- readLines(con = ui_file)
+        ui_content[length(ui_content)]     <- paste0(substr(ui_content[length(ui_content)], 1, nchar(ui_content[length(ui_content)]) - 1), ",")
+        white_space <- paste(rep(" ", ifelse(dashboard_plus, nchar("dashboardPagePlus"), nchar("dashboardPage"))), collapse = "")
+        ui_content[length(ui_content) + 1] <- sprintf("%s skin = '%s')", white_space, skin_value)
+        writeLines(ui_content, con = ui_file)
+        close(ui_file)
+    }
+    
+    
+    
 
     #subdir copies
     imgs <- c("loader.gif", "tooltip.png")
