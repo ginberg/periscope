@@ -138,6 +138,10 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
                 stop("Framework creation could not proceed, invalid type for rightsidebar, only logical or character allowed")
             }
         }
+        if (!is.null(style) && class(style) != "list") {
+            stop("Framework creation could not proceed, invalid type for style, only list allowed")  
+        }
+        
         .create_dirs(newloc, usersep)
         .copy_fw_files(newloc, usersep, resetbutton, dashboard_plus, leftsidebar, right_sidebar_icon, style)
         .copy_program_files(newloc, usersep, sampleapp, resetbutton, leftsidebar, dashboard_plus)
