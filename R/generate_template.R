@@ -107,7 +107,7 @@
 #' 
 #' # blank app named 'myblankapp' created in a temp dir
 #' create_new_application(name = 'myblankapp', location = tempdir())
-#' #' # blank app named 'myblankapp' with a green skin created in a temp dir
+#' # blank app named 'myblankapp' with a green skin created in a temp dir
 #' create_new_application(name = 'myblankapp', location = tempdir(), style = (skin = "green"))
 #' # blank app named 'myblankapp' without a left sidebar created in a temp dir
 #' create_new_application(name = 'myblankapp', location = tempdir(), leftsidebar = FALSE)
