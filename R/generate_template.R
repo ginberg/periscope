@@ -108,7 +108,7 @@
 #' # blank app named 'myblankapp' created in a temp dir
 #' create_new_application(name = 'myblankapp', location = tempdir())
 #' # blank app named 'myblankapp' with a green skin created in a temp dir
-#' create_new_application(name = 'myblankapp', location = tempdir(), style = (skin = "green"))
+#' create_new_application(name = 'myblankapp', location = tempdir(), style = list(skin = "green"))
 #' # blank app named 'myblankapp' without a left sidebar created in a temp dir
 #' create_new_application(name = 'myblankapp', location = tempdir(), leftsidebar = FALSE)
 #'
@@ -138,8 +138,14 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
                 stop("Framework creation could not proceed, invalid type for rightsidebar, only logical or character allowed")
             }
         }
-        if (!is.null(style) && class(style) != "list") {
-            stop("Framework creation could not proceed, invalid type for style, only list allowed")  
+        if (!is.null(style)) {
+            if (class(style) == "list") {
+                if (!identical(intersect("skin", names(style)), character(0)) && !identical(class(style$skin), "character")) {
+                    stop("Framework creation could not proceed, invalid type for skin, only character allowed. See ?shinydashboard::dashboardPage for supported colors.")  
+                }
+            } else {
+                stop("Framework creation could not proceed, invalid type for style, only list allowed")  
+            }
         }
         
         .create_dirs(newloc, usersep)
@@ -236,9 +242,6 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
         close(ui_file)
     }
     
-    
-    
-
     #subdir copies
     imgs <- c("loader.gif", "tooltip.png")
     for (file in imgs) {
