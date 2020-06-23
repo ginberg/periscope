@@ -10,6 +10,8 @@ create_new_application(
   sampleapp = FALSE,
   resetbutton = TRUE,
   rightsidebar = FALSE,
+  leftsidebar = TRUE,
+  style = list(skin = "blue"),
   leftmenu = FALSE
 )
 }
@@ -24,6 +26,10 @@ create_new_application(
 
 \item{rightsidebar}{parameter to set the right sidebar. It can be TRUE/FALSE or a character 
 containing the name of a shiny::icon().}
+
+\item{leftsidebar}{whether the left sidebar should be enabled.}
+
+\item{style}{list containing application styling properties. By default the skin is blue.}
 
 \item{leftmenu}{whether to add a left menu at the header bar.}
 }
@@ -128,9 +134,15 @@ create_new_application(name = 'mytestapp', location = tempdir(), sampleapp = TRU
 rightsidebar = "table")
 
 # blank app named 'myblankapp' created in a temp dir
-create_new_application(name = 'mytestapp', location = tempdir())
+create_new_application(name = 'myblankapp', location = tempdir())
+# blank app named 'myblankapp' with a green skin created in a temp dir
+create_new_application(name = 'myblankapp', location = tempdir(), style = list(skin = "green"))
+# blank app named 'myblankapp' without a left sidebar created in a temp dir
+create_new_application(name = 'myblankapp', location = tempdir(), leftsidebar = FALSE)
 
 }
 \seealso{
 \link[shiny:icon]{shiny:icon()}
+
+\link[shinydashboard:dashboardPage]{shinydashboard:dashboardPage()}
 }

@@ -1,6 +1,8 @@
 ## Comments from Maintainer
 
-Enhancement to add a right sidebar, additional preference for reset button, documentation updates, etc.
+This is a very minor correction to our just-accepted 0.4.10 release - we missed a file change in the merge for the release, apologies in advance.
+
+Fixed tests based on input from Barret Schloerke in preparation for the next release of shiny to CRAN next week.
 
 ---  
     
@@ -9,15 +11,15 @@ Enhancement to add a right sidebar, additional preference for reset button, docu
 
 RStudio Server Pro (Ubuntu 18.04.2)  
 
-* R 3.4.4  
 * R 3.5.3  
-* R 3.6.1
+* R 3.6.3
+* R 4.0.0
 
 Travis-CI (Ubuntu 16.04.6)
 
 * R 3.5.3
-* R 3.6.1
-* R devel (2019-11-23 r77455)
+* R 3.6.3
+* R devel (2020-05-04 r78358)
 
 WinBuilder
 
@@ -27,10 +29,7 @@ WinBuilder
 
 RHub
 
-* devtools::check_rhub(interactive = F)  
-  * Ubuntu Linux 16.04 LTS, R-release, GCC
-  * Windows Server 2008 R2 SP1, R-devel, 32/64 bit
-  * Fedora Linux, R-devel, clang, gfortran
+* devtools::check_rhub(interactive = F)
 
 ---  
     
@@ -57,3 +56,4 @@ tools::package_dependencies(packages = c('periscope'),
 $periscope  
 character(0)
 ```
+
